@@ -1,0 +1,73 @@
+.header {
+  width: 100%;
+  max-width: min(1280px, 100% - 40px);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: max-content;
+  padding: 20px 0 0;
+}
+
+.logoWrapper {
+  width: 300px;
+}
+
+.logoWrapper img {
+  width: 100%;
+  height: 100%;
+}
+
+.burgerMenuBtn {
+  display: none;
+}
+
+.menu {
+  min-width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.authContainer {
+  display: flex;
+  min-width: 10%;
+  justify-content: end;
+}
+
+.profileWrapper {
+  aspect-ratio: 1;
+  width: 60px;
+}
+
+.loginBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--btn-active-bg);
+  padding: 5px;
+  padding-right: 8px;
+  border-radius: 8%;
+}
+
+.loginWrapper {
+  aspect-ratio: 1;
+  width: 30px;
+}
+
+@media (max-width: 768px) {
+  .burgerMenuBtn {
+    display: block;
+  }
+
+  .menu {
+    transform: translateY(-40px);
+    transform: scale(0);
+  }
+
+  .menuOpen {
+    transform: scale(1);
+  }
+}
