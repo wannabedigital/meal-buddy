@@ -94,7 +94,7 @@
 
 .checkboxInput:not(:checked) + .customCheckbox {
   outline: 2px solid var(--input-outline-focus);
-  animation: glow 3s ease-in-out infinite;
+  animation: glow 1s ease-in-out infinite;
 }
 
 .legalLink {
