@@ -55,6 +55,11 @@ button {
   cursor: pointer;
 }
 
+a,
+button {
+  -webkit-tap-highlight-color: #0000;
+}
+
 ::selection {
   background-color: #c96f1a80;
   color: #fffff4;

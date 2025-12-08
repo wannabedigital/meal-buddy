@@ -1,4 +1,10 @@
 .header {
+  position: relative;
+}
+
+.headerFlexBox {
+  position: relative;
+  z-index: 2;
   width: 100%;
   max-width: min(1280px, 100% - 40px);
   margin: 0 auto;
@@ -6,11 +12,23 @@
   justify-content: space-between;
   align-items: center;
   min-height: max-content;
-  padding: 20px 0 0;
+  padding: 20px 0 0px;
+  gap: 0;
+}
+
+.headerBg {
+  position: absolute;
+  top: 0%;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-bg);
 }
 
 .logoWrapper {
-  width: 300px;
+  aspect-ratio: 362 / 81;
+  width: 20%;
+  height: auto;
 }
 
 .logoWrapper img {
@@ -22,12 +40,12 @@
   display: none;
 }
 
-.menu {
+.headerNav {
   min-width: 40%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 54px;
 }
 
 .authContainer {
@@ -36,9 +54,13 @@
   justify-content: end;
 }
 
-.profileWrapper {
-  aspect-ratio: 1;
-  width: 60px;
+.profileBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px;
+  padding-right: 8px;
 }
 
 .loginBtn {
@@ -52,22 +74,75 @@
   border-radius: 8%;
 }
 
-.loginWrapper {
+.loginWrapper,
+.profileWrapper {
   aspect-ratio: 1;
   width: 30px;
 }
 
+.profileWrapper {
+  transform: scale(2);
+}
+
+.mobileMenu {
+  display: none;
+}
+
+.profileToggle {
+  visibility: hidden;
+}
+
 @media (max-width: 768px) {
+  .desktopMenu {
+    display: none;
+  }
+
+  .headerFlexBox {
+    display: flex;
+    justify-content: space-between;
+    gap: 0;
+  }
+
   .burgerMenuBtn {
     display: block;
+    width: 40px;
+    order: 1;
   }
 
-  .menu {
-    transform: translateY(-40px);
-    transform: scale(0);
+  .logoWrapper {
+    width: 30%;
+    order: 2;
+    margin-left: 2%;
   }
 
-  .menuOpen {
-    transform: scale(1);
+  .authContainer {
+    min-width: max-content;
+    order: 3;
+  }
+
+  .loginWrapper,
+  .profileWrapper {
+    width: 24px;
+  }
+
+  .mobileMenu {
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: -300%;
+    z-index: 0;
+    transition: 0.2s top;
+  }
+
+  .mobileMenuOpen {
+    top: 100%;
+  }
+
+  .headerNav {
+    width: 100%;
+    flex-direction: column;
+    padding: 30px;
+    align-items: center;
+    gap: 24px;
   }
 }
