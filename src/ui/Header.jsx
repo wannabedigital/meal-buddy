@@ -2,12 +2,15 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 import styles from '@styles/header.module.css';
-import { BurgerMenu, Profile, Login } from '@ui/Icons';
 import { PAGES } from '@config/pages.config';
+import { useAuthStore } from '@store/authStore';
+import { BurgerMenu, Profile, Login } from '@ui/Icons';
+import Modal from '@ui/Modal';
+import AuthForm from '@components/AuthForm';
 
 const HeaderMenu = () => {
   const pathname = usePathname();
@@ -65,29 +68,54 @@ const MobileMenu = ({ isMenuOpen = false }) => {
 };
 
 const HeaderLogin = () => {
-  const [authStatus, setAuthStatus] = useState(false);
-  const toggleAuthStatus = () => {
-    setAuthStatus((prev) => !prev);
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  const { user, isAuth, login, logout } = useAuthStore();
+  const [mode, setMode] = useState('login');
+
+  const handleFakeLogin = (e) => {
+    e.preventDefault();
+    login({
+      id: 2,
+      username: 'test_login',
+      email: 'login@gmail.com',
+      role: 'user',
+    });
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
   };
 
   return (
-    <div className={styles.authContainer}>
-      {authStatus ? (
-        <button className={styles.profileBtn} onClick={toggleAuthStatus}>
-          <div className={styles.profileToggle}>Вход</div>
-          <div className={styles.profileWrapper}>
-            <Profile />
-          </div>
-        </button>
-      ) : (
-        <button className={styles.loginBtn} onClick={toggleAuthStatus}>
-          <div className={styles.loginWrapper}>
-            <Login />
-          </div>
-          <span>Вход</span>
-        </button>
+    <>
+      <div className={styles.authContainer}>
+        {isAuth ? (
+          <button className={styles.profileBtn} onClick={handleLogout}>
+            <div className={styles.profileToggle}>Вход</div>
+            <div className={styles.profileWrapper}>
+              <Profile />
+            </div>
+          </button>
+        ) : (
+          <button className={styles.loginBtn} onClick={toggleModal}>
+            <div className={styles.loginWrapper}>
+              <Login />
+            </div>
+            <span>Вход</span>
+          </button>
+        )}
+      </div>
+      {showModal && (
+        <Modal onClose={toggleModal}>
+          <AuthForm onClose={toggleModal} />
+        </Modal>
       )}
-    </div>
+    </>
   );
 };
 
@@ -98,28 +126,35 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.headerFlexBox}>
-        <div className={styles.logoWrapper}>
-          <Image src='/img/logo.svg' alt='logo image' width={362} height={81} />
-        </div>
-
-        <div className={styles.desktopMenu}>
-          <HeaderMenu />
-        </div>
-
-        <HeaderLogin />
-
-        <button className={styles.burgerMenuBtn} onClick={toggleMenu}>
-          <div className={styles.burgerMenuWrapper}>
-            <BurgerMenu />
+    <>
+      <header className={styles.header}>
+        <div className={styles.headerFlexBox}>
+          <div className={styles.logoWrapper}>
+            <Image
+              src='/img/logo.svg'
+              alt='logo image'
+              width={362}
+              height={81}
+            />
           </div>
-        </button>
-      </div>
 
-      <MobileMenu isMenuOpen={isMenuOpen} />
-      <div className={styles.headerBg}></div>
-    </header>
+          <div className={styles.desktopMenu}>
+            <HeaderMenu />
+          </div>
+
+          <HeaderLogin />
+
+          <button className={styles.burgerMenuBtn} onClick={toggleMenu}>
+            <div className={styles.burgerMenuWrapper}>
+              <BurgerMenu />
+            </div>
+          </button>
+        </div>
+
+        <MobileMenu isMenuOpen={isMenuOpen} />
+        <div className={styles.headerBg}></div>
+      </header>
+    </>
   );
 };
 
