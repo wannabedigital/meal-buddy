@@ -1,3 +1,7 @@
+:root {
+  --active-header-link-glow: #ffd09b;
+}
+
 .header {
   position: relative;
 }
@@ -48,6 +52,10 @@
   gap: 54px;
 }
 
+.activeNavLink {
+  animation: glow 2s ease-in-out infinite;
+}
+
 .authContainer {
   display: flex;
   min-width: 10%;
@@ -90,6 +98,8 @@
 
 .profileToggle {
   visibility: hidden;
+  pointer-events: none;
+  user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -144,5 +154,29 @@
     padding: 30px;
     align-items: center;
     gap: 24px;
+  }
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 3px var(--active-header-link);
+  }
+  15% {
+    text-shadow: 0 0 4px var(--active-header-link-glow);
+  }
+  30% {
+    text-shadow: 0 0 5px var(--active-header-link-glow);
+  }
+  50% {
+    text-shadow: 0 0 6px var(--active-header-link-glow);
+  }
+  65% {
+    text-shadow: 0 0 5px var(--active-header-link-glow);
+  }
+  90% {
+    text-shadow: 0 0 4px var(--active-header-link-glow);
+  }
+  100% {
+    text-shadow: 0 0 3px var(--active-header-link-glow);
   }
 }

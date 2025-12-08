@@ -3,6 +3,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
+      "@config/*": ["./src/config/*"],
       "@styles/*": ["./src/styles/*"],
       "@ui/*": ["./src/ui/*"]
     }

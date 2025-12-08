@@ -3,21 +3,50 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import styles from '@styles/header.module.css';
-import { BurgerMenu, Profile, Login } from '@/ui/Icons';
+import { BurgerMenu, Profile, Login } from '@ui/Icons';
+import { PAGES } from '@config/pages.config';
 
 const HeaderMenu = () => {
+  const pathname = usePathname();
+
   return (
     <nav className={styles.headerNav}>
       <div className={styles.menuLink}>
-        <Link href={'/'}>Главная</Link>
+        <Link
+          href={PAGES.home.link}
+          className={
+            pathname === PAGES.home.link ? styles.activeNavLink : styles.navLink
+          }
+        >
+          {PAGES.home.name}
+        </Link>
       </div>
       <div className={styles.menuLink}>
-        <Link href={'/'}>Рецепты</Link>
+        <Link
+          href={PAGES.recipes.link}
+          className={
+            pathname === PAGES.recipes.link
+              ? styles.activeNavLink
+              : styles.navLink
+          }
+        >
+          {PAGES.recipes.name}
+        </Link>
       </div>
       <div className={styles.menuLink}>
-        <Link href={'/'}>Отправить рецепт</Link>
+        <Link
+          href={PAGES.addRecipe.link}
+          className={
+            pathname === PAGES.addRecipe.link
+              ? styles.activeNavLink
+              : styles.navLink
+          }
+        >
+          {PAGES.addRecipe.name}
+        </Link>
       </div>
     </nav>
   );
@@ -45,7 +74,7 @@ const HeaderLogin = () => {
     <div className={styles.authContainer}>
       {authStatus ? (
         <button className={styles.profileBtn} onClick={toggleAuthStatus}>
-          <span className={styles.profileToggle}>Вход</span>
+          <div className={styles.profileToggle}>Вход</div>
           <div className={styles.profileWrapper}>
             <Profile />
           </div>
