@@ -56,7 +56,7 @@ const AuthForm = ({ onClose }) => {
             placeholder='username'
             value={formData.username}
             onChange={handleChange}
-            autoComplete='off'
+            autoComplete='username'
           />
         </label>
       )}
@@ -81,7 +81,7 @@ const AuthForm = ({ onClose }) => {
           placeholder='PaSsWord++'
           value={formData.password}
           onChange={handleChange}
-          autoComplete='off'
+          autoComplete='current-password'
         />
       </label>
       <div className={styles.privacyAgreement}>

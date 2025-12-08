@@ -10,6 +10,7 @@ export const useAuthStore = create((set) => ({
         user: userData,
         isAuth: true,
       },
+      console.log('Вы зарегестрированы'),
       console.log(userData)
     ),
 
@@ -19,6 +20,7 @@ export const useAuthStore = create((set) => ({
         user: userData,
         isAuth: true,
       },
+      console.log('Вы вогли в аккаунт'),
       console.log(userData)
     ),
 

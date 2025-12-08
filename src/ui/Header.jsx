@@ -73,18 +73,7 @@ const HeaderLogin = () => {
     setShowModal((prev) => !prev);
   };
 
-  const { user, isAuth, login, logout } = useAuthStore();
-  const [mode, setMode] = useState('login');
-
-  const handleFakeLogin = (e) => {
-    e.preventDefault();
-    login({
-      id: 2,
-      username: 'test_login',
-      email: 'login@gmail.com',
-      role: 'user',
-    });
-  };
+  const { isAuth, logout } = useAuthStore();
 
   const handleLogout = (e) => {
     e.preventDefault();
