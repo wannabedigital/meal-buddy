@@ -1,11 +1,19 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Close } from '@ui/Icons';
 import styles from '@styles/modal.module.css';
 
 const Modal = ({ children, onClose }) => {
+  const [mount, setMount] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMount(true);
+    return () => setMount(false);
+  }, []);
+
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +34,7 @@ const Modal = ({ children, onClose }) => {
     }
   };
 
-  if (typeof window === 'undefined') return null;
+  if (!mount) return null;
 
   return createPortal(
     <div className={styles.portalOverlay} onMouseDown={handleOverlayClick}>
