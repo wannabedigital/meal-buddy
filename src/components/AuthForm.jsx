@@ -59,6 +59,20 @@ const AuthForm = ({ onClose }) => {
       }
 
       if (mode === 'register') {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) return;
+
         register(data.user);
         onClose();
       }

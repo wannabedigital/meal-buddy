@@ -6,21 +6,25 @@ export async function POST(request) {
     const { email, password } = await request.json();
 
     if (!email || !password)
-      return Response.json({ message: 'Нет данных' }, { status: 400 });
+      return Response.json(
+        { message: 'Ошибка получения данных' },
+        { status: 400 }
+      );
 
-    const res = await pool.query('SELECT * FROM users WHERE email = $1', [
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [
       email,
     ]);
 
-    const user = res.rows[0];
+    const user = result.rows[0];
 
     console.log(user);
 
-    if (!user)
+    if (!user) {
       return Response.json(
         { message: 'Пользователь не найден' },
         { status: 400 }
       );
+    }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password_hash);
 
@@ -36,11 +40,12 @@ export async function POST(request) {
           role: user.role,
         },
       },
+      { message: 'Авторизация прошла успешно' },
       { status: 200 }
     );
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
 
-    return Response.json({ message: 'Ошибка', status: 500 });
+    return Response.json({ message: 'Ошибка' }, { status: 500 });
   }
 }
