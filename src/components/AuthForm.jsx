@@ -28,22 +28,61 @@ const AuthForm = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = {
-      username: formData.username,
-      email: formData.email,
-      role: 'user',
-    };
+    // Fake login / signin
+    // const userData = {
+    //   username: formData.username,
+    //   email: formData.email,
+    //   role: 'user',
+    // };
+    // mode === 'login' ? login(userData) : register(userData);
 
-    mode === 'login' ? login(userData) : register(userData);
+    try {
+      if (mode === 'login') {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
 
-    onClose();
+        const data = await res.json();
+
+        if (!res.ok) return;
+
+        login(data.user);
+        onClose();
+      }
+
+      if (mode === 'register') {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) return;
+
+        register(data.user);
+        onClose();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
-    <form className={styles.authForm} method='post' onSubmit={handleSubmit}>
+    <form className={styles.authForm} onSubmit={handleSubmit}>
       <h2 className={styles.formTitle}>
         {mode === 'login' ? 'Авторизация' : 'Регистрация'}
       </h2>

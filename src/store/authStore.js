@@ -22,7 +22,7 @@ export const useAuthStore = create(
           user: userData,
           isAuth: true,
         },
-        console.log('Вы вогли в аккаунт'),
+        console.log('Вы вошли в аккаунт'),
         console.log(userData)
       ),
 
