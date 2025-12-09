@@ -1,0 +1,17 @@
+.page {
+  min-height: 100vh;
+  padding: 100px 0;
+}
+
+.profile {
+  position: relative;
+  z-index: 2;
+  top: 0px;
+  width: 100%;
+  max-width: min(1280px, 100% - 40px);
+  min-height: max-content;
+  margin: 0 auto;
+  background-color: var(--secondary-bg);
+  outline: 2px solid var(--input-outline);
+  border-radius: 10px;
+}
