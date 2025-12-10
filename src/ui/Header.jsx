@@ -84,12 +84,12 @@ const HeaderLogin = () => {
     <>
       <div className={styles.authContainer}>
         {isAuth ? (
-          <button className={styles.profileBtn} onClick={handleLogout}>
+          <Link href={PAGES.profile.link} className={styles.profileBtn}>
             <div className={styles.profileToggle}>Вход</div>
             <div className={styles.profileWrapper}>
               <Profile />
             </div>
-          </button>
+          </Link>
         ) : (
           <button className={styles.loginBtn} onClick={toggleModal}>
             <div className={styles.loginWrapper}>

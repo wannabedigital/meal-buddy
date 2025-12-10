@@ -1,41 +1,42 @@
 import { pool } from '@/lib/database';
-import bcrypt from 'bcrypt';
 
 export async function POST(request) {
   try {
-    const { email, password } = await request.json();
+    const { id, fullname, bio } = await request.json();
 
-    if (!email || !password)
+    if (!id || !fullname || !bio) {
       return Response.json(
         { message: 'Ошибка получения данных' },
         { status: 400 }
       );
+    }
 
-    const usersSelect = await pool.query(
-      'SELECT * FROM users WHERE email = $1',
-      [email]
-    );
+    const checkUser = await pool.query('SELECT * FROM users WHERE id = $1', [
+      id,
+    ]);
 
-    const user = usersSelect.rows[0];
+    const user = checkUser.rows[0];
 
-    const profilesSelect = await pool.query(
+    const checkProfile = await pool.query(
       'SELECT * FROM profiles WHERE user_id = $1',
-      [user.id]
+      [id]
     );
 
-    const profile = profilesSelect.rows[0];
+    const profileExist = checkProfile.rows[0];
 
-    if (!user || !profile) {
+    if (!user || !profileExist) {
       return Response.json(
         { message: 'Пользователь не найден' },
         { status: 400 }
       );
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password_hash);
+    const profilesUpdate = await pool.query(
+      'UPDATE profiles SET full_name = $1, bio = $2 WHERE user_id = $3 RETURNING user_id, full_name, avatar_url, bio;',
+      [fullname, bio, id]
+    );
 
-    if (!isPasswordMatch)
-      return Response.json({ message: 'Неверный пароль' }, { status: 400 });
+    const profile = profilesUpdate.rows[0];
 
     return Response.json(
       {
