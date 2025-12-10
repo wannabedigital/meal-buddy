@@ -6,7 +6,7 @@ import { useAuthStore } from '@store/authStore';
 import styles from '@styles/profileForm.module.css';
 
 const ProfileForm = ({ onClose }) => {
-  const { isAuth, updateInfo } = useAuthStore();
+  const { isAuth, updateInfo, logout } = useAuthStore();
 
   const [formData, setFormData] = useState({
     id: useAuthStore((state) => state.user?.id || ''),
@@ -19,6 +19,11 @@ const ProfileForm = ({ onClose }) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleLogout = () => {
+    logout();
+    onClose();
   };
 
   const handleSubmit = async (e) => {
@@ -76,13 +81,19 @@ const ProfileForm = ({ onClose }) => {
           autoComplete='off'
         />
       </label>
-
-      <div className={styles.buttonContainer}>
-        <input
-          className={styles.submitButton}
-          type='submit'
-          value={'Сохранить'}
-        />
+      <div className={styles.btnFlexContainer}>
+        <div className={styles.buttonContainer}>
+          <input
+            className={styles.submitButton}
+            type='submit'
+            value={'Сохранить'}
+          />
+        </div>
+        <div className={styles.buttonContainer}>
+          <button className={styles.logoutButton} onClick={handleLogout}>
+            Выйти
+          </button>
+        </div>
       </div>
     </form>
   );

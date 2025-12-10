@@ -116,6 +116,7 @@ const AuthForm = ({ onClose }) => {
         <span className={styles.fieldLabel}>Пароль</span>
         <input
           name='password'
+          type='password'
           className={styles.inputField}
           placeholder='PaSsWord++'
           value={formData.password}
