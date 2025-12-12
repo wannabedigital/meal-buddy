@@ -1,0 +1,12 @@
+.recipeSection {
+  width: 100%;
+  max-width: min(1280px, 100% - 40px);
+  margin: 0 auto;
+}
+
+.recipesList {
+  width: 100%;
+  display: grid;
+  grid-template: repeat(5, 1fr) / repeat(2, 1fr);
+  gap: 80px;
+}

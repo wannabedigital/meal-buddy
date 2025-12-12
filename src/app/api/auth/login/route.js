@@ -1,12 +1,13 @@
-import { pool } from '@/lib/database';
+import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
+import { pool } from '@/lib/database';
 
 export async function POST(request) {
   try {
     const { email, password } = await request.json();
 
     if (!email || !password)
-      return Response.json(
+      return NextResponse.json(
         { message: 'Ошибка получения данных' },
         { status: 400 }
       );
@@ -26,7 +27,7 @@ export async function POST(request) {
     const profile = profilesSelect.rows[0];
 
     if (!user || !profile) {
-      return Response.json(
+      return NextResponse.json(
         { message: 'Пользователь не найден' },
         { status: 400 }
       );
@@ -35,9 +36,9 @@ export async function POST(request) {
     const isPasswordMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!isPasswordMatch)
-      return Response.json({ message: 'Неверный пароль' }, { status: 400 });
+      return NextResponse.json({ message: 'Неверный пароль' }, { status: 400 });
 
-    return Response.json(
+    return NextResponse.json(
       {
         user: {
           id: user.id,
@@ -53,6 +54,6 @@ export async function POST(request) {
   } catch (error) {
     console.log(error);
 
-    return Response.json({ message: 'Ошибка' }, { status: 500 });
+    return NextResponse.json({ message: 'Ошибка' }, { status: 500 });
   }
 }

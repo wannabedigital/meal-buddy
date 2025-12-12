@@ -103,8 +103,8 @@ const AuthForm = ({ onClose }) => {
         <span className={styles.fieldLabel}>Эл. Почта</span>
         <input
           name='email'
-          className={styles.inputField}
           type='email'
+          className={styles.inputField}
           placeholder='example@gmail.com'
           required
           value={formData.email}
@@ -118,7 +118,7 @@ const AuthForm = ({ onClose }) => {
           name='password'
           type='password'
           className={styles.inputField}
-          placeholder='PaSsWord++'
+          placeholder='Введите пароль'
           value={formData.password}
           onChange={handleChange}
           autoComplete='current-password'

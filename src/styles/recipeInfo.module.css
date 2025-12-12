@@ -1,0 +1,97 @@
+.recipeInfo {
+  width: 100%;
+  padding-top: 40px;
+}
+
+.header {
+  width: 100%;
+  display: grid;
+  grid-template: 1fr / repeat(2, 1fr);
+  gap: 40px;
+}
+
+.recipePhotoWrapper {
+  min-width: 80%;
+  aspect-ratio: 2;
+  background-color: var(--btn-neutral-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.recipeName {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title,
+.description {
+  text-wrap: balance;
+}
+
+.body {
+  margin-top: 40px;
+  display: grid;
+  grid-template: 1fr / repeat(2, 1fr);
+  gap: 40px;
+}
+
+.rightContainer,
+.leftContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.rightContainer {
+  height: 100%;
+  gap: 40px;
+}
+
+.leftContainer {
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  outline: 2px solid var(--input-outline);
+}
+
+.btnContiner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.goToRecipe {
+  display: grid;
+  padding: 16px 24px;
+  border-radius: 4px;
+  background-color: var(--btn-active-bg);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  transition: transform 0.2s ease-in;
+}
+
+.goToRecipe:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-out;
+}
+
+.nutValGrid {
+  width: 100%;
+  display: grid;
+  grid-template: 1fr / repeat(4, 1fr);
+  gap: 10px;
+}
+
+.value {
+  display: grid;
+  grid-template: 1fr 1fr / 1fr;
+  align-items: center;
+  justify-items: center;
+  border-radius: 4px;
+  background-color: var(--btn-active-bg);
+}
+
+.valName {
+  font-weight: 700;
+}
