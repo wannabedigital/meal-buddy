@@ -27,12 +27,23 @@ export async function POST(request) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const result = await pool.query(
+    const usersInsert = await pool.query(
       'INSERT INTO users (username, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id, username, email, role;',
       [username, email, passwordHash, 'user']
     );
 
-    const user = result.rows[0];
+    const user = usersInsert.rows[0];
+
+    const avatarUrl = `${user.username}-${user.id}`
+      .toLowerCase()
+      .replace(' ', '-');
+
+    const profilesInsert = await pool.query(
+      'INSERT INTO profiles (user_id, full_name, avatar_url, bio) VALUES ($1, $2, $3, $4) RETURNING user_id, full_name, avatar_url, bio;',
+      [user.id, user.username, avatarUrl, 'Информация о себе']
+    );
+
+    const profile = profilesInsert.rows[0];
 
     return Response.json(
       {
@@ -40,10 +51,11 @@ export async function POST(request) {
           id: user.id,
           username: user.username,
           email: user.email,
-          role: user.role,
+          fullname: profile.full_name,
+          bio: profile.bio,
+          avatar_url: profile.avatar_url,
         },
       },
-      { message: 'Регистрация прошла успешно' },
       { status: 200 }
     );
   } catch (error) {

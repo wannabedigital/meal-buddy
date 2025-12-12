@@ -26,6 +26,17 @@ export const useAuthStore = create(
         console.log(userData)
       ),
 
+    updateInfo: (userData) =>
+      set(
+        {
+          user: userData,
+          isAuth: true,
+        },
+
+        console.log('Данные обновлены'),
+        console.log(userData)
+      ),
+
     logout: () =>
       set(
         {
