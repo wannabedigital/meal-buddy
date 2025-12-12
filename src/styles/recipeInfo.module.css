@@ -76,6 +76,13 @@
   transition: transform 0.2s ease-out;
 }
 
+.totalWeight {
+  width: 100%;
+  max-width: 100%;
+  line-height: 100%;
+  padding-bottom: 8px;
+}
+
 .nutValGrid {
   width: 100%;
   display: grid;

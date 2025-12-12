@@ -85,7 +85,12 @@ const RecipesList = () => {
             description={selectedRecipe.description}
             cookingTime={selectedRecipe.cooking_time}
             difficulty={selectedRecipe.difficulty}
-            onClick={toggleModal}
+            weight={selectedRecipe.total_weight}
+            calories={selectedRecipe.total_calories}
+            proteins={selectedRecipe.total_proteins}
+            fats={selectedRecipe.total_fats}
+            carbons={selectedRecipe.total_carbs}
+            path={`/recipes/${selectedRecipe.recipe_id}`}
           />
         </Modal>
       )}
