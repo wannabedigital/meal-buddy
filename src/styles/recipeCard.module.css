@@ -1,0 +1,47 @@
+.recipeCard {
+  overflow: hidden;
+  width: 100%;
+  background-color: var(--secondary-bg);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.recipePhotoWrapper {
+  width: 100%;
+  aspect-ratio: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--btn-neutral-bg);
+}
+
+.recipeTitle {
+  text-align: center;
+  max-width: calc(100% - 40px);
+  min-height: 80px;
+  text-wrap: balance;
+  margin: 0 auto;
+}
+
+.btnsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.goToRecipe {
+  padding: 16px 16px;
+  border-radius: 4px;
+  background-color: var(--btn-active-bg);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  transition: transform 0.2s ease-in;
+}
+
+.goToRecipe:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-out;
+}

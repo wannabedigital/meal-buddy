@@ -1,0 +1,9 @@
+.page {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: min(1280px, 100% - 40px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-top: 100px;
+}

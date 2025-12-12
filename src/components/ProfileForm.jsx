@@ -30,7 +30,7 @@ const ProfileForm = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      const res = await fetch('/api/profile/profileInfo', {
+      const res = await fetch('/api/profile/info', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

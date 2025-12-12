@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import { pool } from '@/lib/database';
 
 export async function POST(request) {
@@ -5,9 +6,11 @@ export async function POST(request) {
     const { id, fullname, bio } = await request.json();
 
     if (!id || !fullname || !bio) {
-      return Response.json(
+      return NextResponse.json(
         { message: 'Ошибка получения данных' },
-        { status: 400 }
+        {
+          status: 400,
+        }
       );
     }
 
@@ -25,7 +28,7 @@ export async function POST(request) {
     const profileExist = checkProfile.rows[0];
 
     if (!user || !profileExist) {
-      return Response.json(
+      return NextResponse.json(
         { message: 'Пользователь не найден' },
         { status: 400 }
       );
@@ -38,7 +41,7 @@ export async function POST(request) {
 
     const profile = profilesUpdate.rows[0];
 
-    return Response.json(
+    return NextResponse.json(
       {
         user: {
           id: user.id,
@@ -52,8 +55,8 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
+    console.error('GET /api/profile/info error:', error);
 
-    return Response.json({ message: 'Ошибка' }, { status: 500 });
+    return NextResponse.json({ message: 'Ошибка' }, { status: 500 });
   }
 }

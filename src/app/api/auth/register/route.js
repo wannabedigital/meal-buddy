@@ -1,12 +1,13 @@
-import { pool } from '@/lib/database';
+import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
+import { pool } from '@/lib/database';
 
 export async function POST(request) {
   try {
     const { username, email, password } = await request.json();
 
     if (!username || !email || !password) {
-      return Response.json(
+      return NextResponse.json(
         { message: 'Ошибка получения данных' },
         { status: 400 }
       );
@@ -19,7 +20,7 @@ export async function POST(request) {
     const userExist = checkUser.rows[0];
 
     if (userExist) {
-      return Response.json(
+      return NextResponse.json(
         { message: 'По такому email уже есть пользователь' },
         { status: 400 }
       );
@@ -45,7 +46,7 @@ export async function POST(request) {
 
     const profile = profilesInsert.rows[0];
 
-    return Response.json(
+    return NextResponse.json(
       {
         user: {
           id: user.id,
@@ -61,6 +62,6 @@ export async function POST(request) {
   } catch (error) {
     console.log(error);
 
-    return Response.json({ message: 'Ошибка' }, { status: 500 });
+    return NextResponse.json({ message: 'Ошибка' }, { status: 500 });
   }
 }
