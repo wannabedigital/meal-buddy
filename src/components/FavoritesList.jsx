@@ -117,7 +117,7 @@ const FavoritesList = () => {
         ))}
       </div>
 
-      {recipes.length > 0 && (
+      {recipes.length > 0 ? (
         <div className={styles.pagination}>
           <button
             onClick={() => setOffset(Math.max(0, offset - limit))}
@@ -132,6 +132,8 @@ const FavoritesList = () => {
             Следующая
           </button>
         </div>
+      ) : (
+        <div className={styles.noRecipes}>Добавьте рецепты в избранное</div>
       )}
 
       {showModal && selectedRecipe && (

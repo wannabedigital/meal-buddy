@@ -35,13 +35,9 @@ export async function POST(request) {
 
     const user = usersInsert.rows[0];
 
-    const avatarUrl = `${user.username}-${user.id}`
-      .toLowerCase()
-      .replace(' ', '-');
-
     const profilesInsert = await pool.query(
-      'INSERT INTO profiles (user_id, full_name, avatar_url, bio) VALUES ($1, $2, $3, $4) RETURNING user_id, full_name, avatar_url, bio;',
-      [user.id, user.username, avatarUrl, 'Информация о себе']
+      'SELECT * FROM profiles WHERE user_id = $1;',
+      [user.id]
     );
 
     const profile = profilesInsert.rows[0];
