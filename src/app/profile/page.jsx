@@ -5,6 +5,7 @@ import styles from '@styles/page.module.css';
 import ProfileInfo from '@components/ProfileInfo';
 import AuthForm from '@components/AuthForm';
 import { useAuthStore } from '@store/authStore';
+import FavoritesList from '@/components/FavoritesList';
 
 export default function Profile() {
   const { isAuth } = useAuthStore();
@@ -24,6 +25,12 @@ export default function Profile() {
     <main className={styles.page}>
       <section className={styles.profile}>
         <ProfileInfo />
+        <div className={styles.favoriteList}>
+          <h2 className={styles.favoriteTitle}>Избранное</h2>
+          <div className={styles.favoriteRecipes}>
+            <FavoritesList />
+          </div>
+        </div>
       </section>
     </main>
   );

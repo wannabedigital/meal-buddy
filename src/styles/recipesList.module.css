@@ -7,6 +7,25 @@
 .recipesList {
   width: 100%;
   display: grid;
-  grid-template: repeat(5, 1fr) / repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 80px;
+}
+
+.favoriteRecipesList {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 80px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.pagination button:disabled {
+  visibility: hidden;
 }

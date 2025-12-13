@@ -16,6 +16,8 @@ const FavoriteButton = ({ isAuth, favorited = false, onLike, onDislike }) => {
   );
 
   return (
+    <>
+    {}
     <div className={styles.favoriteBtn}>
       {isAuth ? (
         button
@@ -25,6 +27,7 @@ const FavoriteButton = ({ isAuth, favorited = false, onLike, onDislike }) => {
         </Link>
       )}
     </div>
+    </>
   );
 };
 

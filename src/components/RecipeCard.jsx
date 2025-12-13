@@ -1,5 +1,5 @@
 import styles from '@styles/recipeCard.module.css';
-import FavoriteButton from './FavoriteButton';
+import FavoriteButton from '@components/FavoriteButton';
 
 const RecipeCard = ({
   title,

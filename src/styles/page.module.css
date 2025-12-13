@@ -25,3 +25,16 @@
   max-width: min(640px, 100% - 40px);
   margin: 0 auto;
 }
+
+.favoriteList {
+  padding-top: 20px;
+}
+
+.favoriteTitle {
+  font-size: 2.4rem;
+  padding: 30px;
+}
+
+.favoriteRecipes {
+  padding: 0 10px;
+}
