@@ -23,7 +23,7 @@ export async function GET(request, { params }) {
 
     return NextResponse.json({ steps: result.rows }, { status: 200 });
   } catch (error) {
-    console.error(`GET /api/recipes/${params.id} error:`, error);
+    console.error(`GET /api/recipes/steps/${params.id} error:`, error);
     return NextResponse.json({ message: 'Ошибка сервера' }, { status: 500 });
   }
 }
