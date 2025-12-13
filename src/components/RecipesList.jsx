@@ -3,9 +3,13 @@ import { useEffect, useState } from 'react';
 import RecipeCard from '@components/RecipeCard';
 import RecipeInfo from '@components/RecipeInfo';
 import Modal from '@ui/Modal';
+import { useAuthStore } from '@store/authStore';
 import styles from '@styles/recipesList.module.css';
 
 const RecipesList = () => {
+  const { isAuth } = useAuthStore();
+  const userId = useAuthStore((state) => state.user?.id ?? null);
+
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => {
     setShowModal((prev) => !prev);
@@ -19,12 +23,12 @@ const RecipesList = () => {
   useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset]);
+  }, [offset, userId, setRecipes]);
 
   async function fetchList() {
     try {
       const res = await fetch(
-        `/api/recipes/catalog?limit=${limit}&offset=${offset}`
+        `/api/recipes/catalog?limit=${limit}&offset=${offset}&user_id=${userId}`
       );
       if (!res.ok) {
         return;
@@ -51,6 +55,55 @@ const RecipesList = () => {
     }
   }
 
+  async function addFavorite(recipeId) {
+    setRecipes((prev) =>
+      prev.map((r) =>
+        r.recipe_id === recipeId ? { ...r, favorited: true } : r
+      )
+    );
+    try {
+      const res = await fetch(`/api/favorites/${recipeId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: userId,
+        }),
+      });
+      if (!res.ok) {
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      setRecipes((prev) =>
+        prev.map((r) =>
+          r.recipe_id === recipeId ? { ...r, favorited: false } : r
+        )
+      );
+    }
+  }
+
+  async function deleteFavorite(recipeId) {
+    setRecipes((prev) =>
+      prev.map((r) =>
+        r.recipe_id === recipeId ? { ...r, favorited: false } : r
+      )
+    );
+    try {
+      const res = await fetch(`/api/favorites/${recipeId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: userId,
+        }),
+      });
+      if (!res.ok) {
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <section className={styles.recipeSection}>
       <div className={styles.recipesList}>
@@ -59,6 +112,10 @@ const RecipesList = () => {
             key={recipe.recipe_id}
             title={recipe.title}
             onClick={() => fetchDetails(recipe.recipe_id)}
+            isAuth={isAuth}
+            favorited={recipe.favorited}
+            onLike={() => addFavorite(recipe.recipe_id)}
+            onDislike={() => deleteFavorite(recipe.recipe_id)}
           />
         ))}
       </div>

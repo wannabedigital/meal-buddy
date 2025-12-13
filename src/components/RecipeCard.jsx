@@ -1,6 +1,14 @@
 import styles from '@styles/recipeCard.module.css';
+import FavoriteButton from './FavoriteButton';
 
-const RecipeCard = ({ title, onClick }) => {
+const RecipeCard = ({
+  title,
+  onClick,
+  isAuth,
+  favorited,
+  onLike,
+  onDislike,
+}) => {
   return (
     <article className={styles.recipeCard}>
       <div className={styles.recipePhotoWrapper}>Здесь будет фото</div>
@@ -9,6 +17,12 @@ const RecipeCard = ({ title, onClick }) => {
         <button className={styles.goToRecipe} onClick={onClick}>
           Посмотреть
         </button>
+        <FavoriteButton
+          isAuth={isAuth}
+          favorited={favorited}
+          onLike={onLike}
+          onDislike={onDislike}
+        />
       </div>
     </article>
   );
