@@ -1,9 +1,47 @@
 .page {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   max-width: min(1280px, 100% - 40px);
   min-height: 100vh;
   margin: 0 auto;
   padding-top: 100px;
+}
+
+.stepSection {
+  margin-top: 40px;
+}
+
+.sectionTitle {
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+}
+
+.stepsList {
+  list-style-type: none;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.stepNum {
+  font-size: 2.4rem;
+}
+
+.stepDescription {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.stepPhotoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  aspect-ratio: 2;
+  background-color: var(--btn-neutral-bg);
+  overflow: hidden;
+  border-radius: 8px;
 }

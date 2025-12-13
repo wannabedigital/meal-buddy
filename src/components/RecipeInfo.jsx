@@ -52,7 +52,7 @@ const RecipeInfo = ({
   description,
   cookingTime,
   difficulty,
-  path,
+  path = null,
   weight = 100,
   calories = 0,
   proteins = 0,
@@ -68,7 +68,7 @@ const RecipeInfo = ({
   return (
     <div className={styles.recipeInfo}>
       <div className={styles.header}>
-        <div className={styles.recipePhotoWrapper}></div>
+        <div className={styles.recipePhotoWrapper}>Здесь будет фото блюда</div>
         <div className={styles.recipeName}>
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.description}>{description}</p>
@@ -84,9 +84,11 @@ const RecipeInfo = ({
             carbons={roundedCarbons}
           />
           <div className={styles.btnContiner}>
-            <Link href={path} className={styles.goToRecipe}>
-              Перейти
-            </Link>
+            {!!path && (
+              <Link href={path} className={styles.goToRecipe}>
+                Перейти
+              </Link>
+            )}
           </div>
         </div>
         <div className={styles.leftContainer}>
