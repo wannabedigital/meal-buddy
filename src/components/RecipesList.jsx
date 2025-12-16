@@ -4,11 +4,14 @@ import RecipeCard from '@components/RecipeCard';
 import RecipeInfo from '@components/RecipeInfo';
 import Modal from '@ui/Modal';
 import { useAuthStore } from '@store/authStore';
+import { useCatalogFilterStore } from '@store/catalogFilterStore';
 import styles from '@styles/recipesList.module.css';
+import CatalogFilter from './CatalogFilter';
 
 const RecipesList = () => {
   const { isAuth } = useAuthStore();
   const userId = useAuthStore((state) => state.user?.id ?? null);
+  const { selectedCategories, selectedTags } = useCatalogFilterStore();
 
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => {
@@ -17,26 +20,51 @@ const RecipesList = () => {
 
   const limit = 4;
   const [offset, setOffset] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   useEffect(() => {
+    fetchFilters();
+  }, []);
+
+  useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset, userId, setRecipes]);
+  }, [offset, userId, setRecipes, selectedCategories, selectedTags]);
+
+  async function fetchFilters() {
+    try {
+      const res = await fetch('/api/recipes/filters');
+      if (!res.ok) return;
+      const data = await res.json();
+      setCategories(data.categories);
+      setTags(data.tags);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function fetchList() {
+    const params = new URLSearchParams({
+      limit,
+      offset,
+    });
+    if (userId) params.append('user_id', userId);
+    if (selectedCategories.length)
+      params.append('categories', selectedCategories.join(','));
+    if (selectedTags.length) params.append('tags', selectedTags.join(','));
+
     try {
-      const res = await fetch(
-        `/api/recipes/catalog?limit=${limit}&offset=${offset}&user_id=${userId}`
-      );
+      const res = await fetch(`/api/recipes/catalog?${params.toString()}`);
       if (!res.ok) {
         return;
       }
       const data = await res.json();
       setRecipes(data.recipes || []);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -106,20 +134,22 @@ const RecipesList = () => {
 
   return (
     <section className={styles.recipeSection}>
-      <div className={styles.recipesList}>
-        {recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.recipe_id}
-            title={recipe.title}
-            onClick={() => fetchDetails(recipe.recipe_id)}
-            isAuth={isAuth}
-            favorited={recipe.favorited}
-            onLike={() => addFavorite(recipe.recipe_id)}
-            onDislike={() => deleteFavorite(recipe.recipe_id)}
-          />
-        ))}
+      <div className={styles.fullCatalog}>
+        <CatalogFilter categories={categories} tags={tags} />
+        <div className={styles.recipesList}>
+          {recipes.map((recipe) => (
+            <RecipeCard
+              key={recipe.recipe_id}
+              title={recipe.title}
+              onClick={() => fetchDetails(recipe.recipe_id)}
+              isAuth={isAuth}
+              favorited={recipe.favorited}
+              onLike={() => addFavorite(recipe.recipe_id)}
+              onDislike={() => deleteFavorite(recipe.recipe_id)}
+            />
+          ))}
+        </div>
       </div>
-
       <div className={styles.pagination}>
         <button
           onClick={() => setOffset(Math.max(0, offset - limit))}

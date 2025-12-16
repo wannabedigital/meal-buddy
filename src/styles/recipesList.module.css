@@ -4,6 +4,11 @@
   margin: 0 auto;
 }
 
+.fullCatalog {
+  display: flex;
+  gap: 80px;
+}
+
 .recipesList {
   width: 100%;
   display: grid;
@@ -27,7 +32,8 @@
 }
 
 .pagination button:disabled {
-  visibility: hidden;
+  opacity: 0.7;
+  cursor: no-drop;
 }
 
 .noRecipes {
