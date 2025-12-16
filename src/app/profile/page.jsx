@@ -5,7 +5,7 @@ import styles from '@styles/page.module.css';
 import ProfileInfo from '@components/ProfileInfo';
 import AuthForm from '@components/AuthForm';
 import { useAuthStore } from '@store/authStore';
-import FavoritesList from '@/components/FavoritesList';
+import FavoritesList from '@components/FavoritesList';
 
 export default function Profile() {
   const { isAuth } = useAuthStore();

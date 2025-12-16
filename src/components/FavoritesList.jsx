@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useAuthStore } from '@/store/authStore';
-import RecipeCard from '@components/RecipeCard';
-import RecipeInfo from '@components/RecipeInfo';
-import Modal from '@/ui/Modal';
+import { useAuthStore } from '@store/authStore';
+import RecipeCard from '@ui/RecipeCard';
+import RecipeInfo from '@ui/RecipeInfo';
+import Modal from '@ui/Modal';
 import styles from '@styles/recipesList.module.css';
 
 const FavoritesList = () => {
@@ -122,12 +122,14 @@ const FavoritesList = () => {
           <button
             onClick={() => setOffset(Math.max(0, offset - limit))}
             disabled={offset === 0}
+            className={styles.favoritePaginationButton}
           >
             Предыдущая
           </button>
           <button
             onClick={() => setOffset(Math.min(offset + limit, recipes.length))}
             disabled={recipes.length < limit}
+            className={styles.favoritePaginationButton}
           >
             Следующая
           </button>

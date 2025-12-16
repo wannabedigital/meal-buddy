@@ -1,12 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
-import RecipeCard from '@components/RecipeCard';
-import RecipeInfo from '@components/RecipeInfo';
+import RecipeCard from '@ui/RecipeCard';
+import RecipeInfo from '@ui/RecipeInfo';
 import Modal from '@ui/Modal';
 import { useAuthStore } from '@store/authStore';
 import { useCatalogFilterStore } from '@store/catalogFilterStore';
 import styles from '@styles/recipesList.module.css';
-import CatalogFilter from './CatalogFilter';
+import CatalogFilter from '../ui/CatalogFilter';
 
 const RecipesList = () => {
   const { isAuth } = useAuthStore();
@@ -34,7 +34,7 @@ const RecipesList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offset, userId, setRecipes, selectedCategories, selectedTags]);
 
-  async function fetchFilters() {
+  const fetchFilters = async () => {
     try {
       const res = await fetch('/api/recipes/filters');
       if (!res.ok) return;
@@ -44,9 +44,9 @@ const RecipesList = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async function fetchList() {
+  const fetchList = async () => {
     const params = new URLSearchParams({
       limit,
       offset,
@@ -66,9 +66,9 @@ const RecipesList = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function fetchDetails(recipeId) {
+  const fetchDetails = async (recipeId) => {
     setSelectedRecipe(null);
     try {
       const res = await fetch(`/api/recipes/${recipeId}`);
@@ -81,9 +81,9 @@ const RecipesList = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function addFavorite(recipeId) {
+  const addFavorite = async (recipeId) => {
     setRecipes((prev) =>
       prev.map((r) =>
         r.recipe_id === recipeId ? { ...r, favorited: true } : r
@@ -108,9 +108,9 @@ const RecipesList = () => {
         )
       );
     }
-  }
+  };
 
-  async function deleteFavorite(recipeId) {
+  const deleteFavorite = async (recipeId) => {
     setRecipes((prev) =>
       prev.map((r) =>
         r.recipe_id === recipeId ? { ...r, favorited: false } : r
@@ -130,7 +130,7 @@ const RecipesList = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <section className={styles.recipeSection}>
@@ -150,20 +150,23 @@ const RecipesList = () => {
           ))}
         </div>
       </div>
-      <div className={styles.pagination}>
-        <button
-          onClick={() => setOffset(Math.max(0, offset - limit))}
-          disabled={offset === 0}
-        >
-          Предыдущая
-        </button>
-        <button
-          onClick={() => setOffset(Math.min(offset + limit, recipes.length))}
-          disabled={offset > recipes.length}
-        >
-          Следующая
-        </button>
-      </div>
+
+      {!!recipes.length && (offset !== 0 || offset < recipes.length) && (
+        <div className={styles.pagination}>
+          <button
+            onClick={() => setOffset(Math.max(0, offset - limit))}
+            disabled={offset === 0}
+          >
+            Предыдущая
+          </button>
+          <button
+            onClick={() => setOffset(Math.min(offset + limit, recipes.length))}
+            disabled={offset > recipes.length}
+          >
+            Следующая
+          </button>
+        </div>
+      )}
 
       {showModal && selectedRecipe && (
         <Modal onClose={toggleModal}>

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styles from '@styles/recipeInfo.module.css';
-import FavoriteButton from '@components/FavoriteButton';
 
 const NutritionalValue = ({
   weight = 0,

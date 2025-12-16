@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from '@styles/profile.module.css';
-import { useAuthStore } from '@/store/authStore';
+import { useAuthStore } from '@store/authStore';
 import ProfileForm from '@components/ProfileForm';
 import { Profile, OptionsIcon } from '@ui/Icons';
 import Modal from '@ui/Modal';
@@ -13,7 +13,26 @@ const ProfileInfo = () => {
   const toggleModal = () => {
     setShowModal((prev) => !prev);
   };
+  const userId = useAuthStore((state) => state.user?.id || '');
   const username = useAuthStore((state) => state.user?.username || '');
+
+  const [recipesAmount, setRecipesAmount] = useState(0);
+
+  useEffect(() => {
+    fetchRecipesAmount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchRecipesAmount = async () => {
+    try {
+      const res = await fetch(`/api/profile/recipes-amount?user_id=${userId}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      setRecipesAmount(data.recipesAmount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -29,7 +48,7 @@ const ProfileInfo = () => {
           <div className={styles.profileInfo}>
             <p className={styles.profileUsername}>{username}</p>
             <div className={styles.profileRecipeCount}>
-              Отправлено рецептов -{' '}
+              Отправлено рецептов - <small>{recipesAmount}</small>
             </div>
           </div>
           <button className={styles.optionsBtn} onClick={toggleModal}>

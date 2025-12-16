@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from '@styles/recipes.module.css';
-import RecipeInfo from '@components/RecipeInfo';
+import RecipeInfo from '@ui/RecipeInfo';
 
 export default async function Recipe({ params }) {
   const { recipe } = await params;
