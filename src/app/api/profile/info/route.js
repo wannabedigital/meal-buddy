@@ -55,7 +55,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('GET /api/profile/info error:', error);
+    console.error('POST /api/profile/info error:', error);
 
     return NextResponse.json({ message: 'Ошибка' }, { status: 500 });
   }

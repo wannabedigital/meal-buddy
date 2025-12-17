@@ -1,0 +1,71 @@
+.mainOffer {
+  width: 100%;
+  max-width: min(1280px, 100% - 40px);
+  margin: 80px auto 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-left: 40px;
+}
+
+.offerContent {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-wrap: balance;
+}
+
+.offerTitle {
+  font-weight: 700;
+  color: #f57f17;
+  margin-bottom: 30px;
+}
+
+.offerSubtitle {
+  color: #f9a825;
+  margin-bottom: 48px;
+}
+
+.divider {
+  width: 100%;
+  height: 4px;
+  background-color: #ffeb3b;
+  margin-bottom: 30px;
+  border-radius: 2px;
+}
+
+.buttonLink {
+  display: inline-block;
+}
+
+.offerButton {
+  width: fit-content;
+  height: fit-content;
+  background-image: linear-gradient(to bottom right, #ffca28, #fbc02d);
+  color: #f9f9f9;
+  font-weight: 600;
+  border: none;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 8px 25px 5px var(--box-shadow);
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.offerButton:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.offerImgWrapper {
+  position: relative;
+  width: 800px;
+  aspect-ratio: 1.5;
+}
+
+.offerImgWrapper img {
+  object-fit: contain;
+}

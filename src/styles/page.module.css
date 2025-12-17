@@ -15,3 +15,26 @@
   outline: 2px solid var(--input-outline);
   border-radius: 10px;
 }
+
+.pageTitle {
+  margin-bottom: 20px;
+}
+
+.authForm {
+  width: 100%;
+  max-width: min(640px, 100% - 40px);
+  margin: 0 auto;
+}
+
+.favoriteList {
+  padding-top: 20px;
+}
+
+.favoriteTitle {
+  font-size: 2.4rem;
+  padding: 30px;
+}
+
+.favoriteRecipes {
+  padding: 0 10px;
+}

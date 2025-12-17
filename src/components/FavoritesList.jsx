@@ -1,17 +1,14 @@
 'use client';
-import { useEffect, useState } from 'react';
-import CatalogFilter from '@ui/CatalogFilter';
+import { useState, useEffect } from 'react';
+import { useAuthStore } from '@store/authStore';
 import RecipeCard from '@ui/RecipeCard';
 import RecipeInfo from '@ui/RecipeInfo';
 import Modal from '@ui/Modal';
-import { useAuthStore } from '@store/authStore';
-import { useCatalogFilterStore } from '@store/catalogFilterStore';
 import styles from '@styles/recipesList.module.css';
 
-const RecipesList = () => {
+const FavoritesList = () => {
   const { isAuth } = useAuthStore();
   const userId = useAuthStore((state) => state.user?.id ?? null);
-  const { selectedCategories, selectedTags } = useCatalogFilterStore();
 
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => {
@@ -20,55 +17,30 @@ const RecipesList = () => {
 
   const limit = 4;
   const [offset, setOffset] = useState(0);
-  const [categories, setCategories] = useState([]);
-  const [tags, setTags] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   useEffect(() => {
-    fetchFilters();
-  }, []);
-
-  useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset, userId, setRecipes, selectedCategories, selectedTags]);
+  }, [offset, userId, setRecipes]);
 
-  const fetchFilters = async () => {
+  async function fetchList() {
     try {
-      const res = await fetch('/api/recipes/filters');
-      if (!res.ok) return;
-      const data = await res.json();
-      setCategories(data.categories);
-      setTags(data.tags);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchList = async () => {
-    const params = new URLSearchParams({
-      limit,
-      offset,
-    });
-    if (userId) params.append('user_id', userId);
-    if (selectedCategories.length)
-      params.append('categories', selectedCategories.join(','));
-    if (selectedTags.length) params.append('tags', selectedTags.join(','));
-
-    try {
-      const res = await fetch(`/api/recipes/catalog?${params.toString()}`);
+      const res = await fetch(
+        `/api/profile/favorites?limit=${limit}&offset=${offset}&user_id=${userId}`
+      );
       if (!res.ok) {
         return;
       }
       const data = await res.json();
       setRecipes(data.recipes || []);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
-  };
+  }
 
-  const fetchDetails = async (recipeId) => {
+  async function fetchDetails(recipeId) {
     setSelectedRecipe(null);
     try {
       const res = await fetch(`/api/recipes/${recipeId}`);
@@ -81,9 +53,9 @@ const RecipesList = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
-  const addFavorite = async (recipeId) => {
+  async function addFavorite(recipeId) {
     setRecipes((prev) =>
       prev.map((r) =>
         r.recipe_id === recipeId ? { ...r, favorited: true } : r
@@ -108,65 +80,62 @@ const RecipesList = () => {
         )
       );
     }
-  };
+  }
 
-  const deleteFavorite = async (recipeId) => {
-    setRecipes((prev) =>
-      prev.map((r) =>
-        r.recipe_id === recipeId ? { ...r, favorited: false } : r
-      )
-    );
+  async function deleteFavorite(recipeId) {
+    setRecipes((prev) => prev.filter((r) => r.recipe_id !== recipeId));
+
     try {
       const res = await fetch(`/api/favorites/${recipeId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: userId,
-        }),
+        body: JSON.stringify({ id: userId }),
       });
+
       if (!res.ok) {
-        return;
+        throw new Error('Ошибка удаления');
       }
     } catch (error) {
       console.error(error);
+      fetchList();
     }
-  };
+  }
 
   return (
     <section className={styles.recipeSection}>
-      <div className={styles.fullCatalog}>
-        <CatalogFilter categories={categories} tags={tags} />
-        <div className={styles.recipesList}>
-          {recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.recipe_id}
-              id={recipe.recipe_id}
-              title={recipe.title}
-              onClick={() => fetchDetails(recipe.recipe_id)}
-              isAuth={isAuth}
-              favorited={recipe.favorited}
-              onLike={() => addFavorite(recipe.recipe_id)}
-              onDislike={() => deleteFavorite(recipe.recipe_id)}
-            />
-          ))}
-        </div>
+      <div className={styles.favoriteRecipesList}>
+        {recipes.map((recipe) => (
+          <RecipeCard
+            key={recipe.recipe_id}
+            title={recipe.title}
+            onClick={() => fetchDetails(recipe.recipe_id)}
+            isAuth={isAuth}
+            favorited={recipe.favorited}
+            onLike={() => addFavorite(recipe.recipe_id)}
+            onDislike={() => deleteFavorite(recipe.recipe_id)}
+          />
+        ))}
       </div>
 
-      {recipes.length > 0 && (
+      {recipes.length > 0 ? (
         <div className={styles.pagination}>
           <button
             onClick={() => setOffset(Math.max(0, offset - limit))}
             disabled={offset === 0}
+            className={styles.favoritePaginationButton}
           >
             Предыдущая
           </button>
           <button
             onClick={() => setOffset(Math.min(offset + limit, recipes.length))}
-            disabled={offset > recipes.length}
+            disabled={recipes.length < limit}
+            className={styles.favoritePaginationButton}
           >
             Следующая
           </button>
         </div>
+      ) : (
+        <div className={styles.noRecipes}>Добавьте рецепты в избранное</div>
       )}
 
       {showModal && selectedRecipe && (
@@ -189,4 +158,4 @@ const RecipesList = () => {
   );
 };
 
-export default RecipesList;
+export default FavoritesList;
