@@ -140,6 +140,7 @@ const RecipesList = () => {
           {recipes.map((recipe) => (
             <RecipeCard
               key={recipe.recipe_id}
+              id={recipe.recipe_id}
               title={recipe.title}
               onClick={() => fetchDetails(recipe.recipe_id)}
               isAuth={isAuth}
