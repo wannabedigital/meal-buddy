@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from '@styles/footer.module.css';
+import { PAGES } from '@config/pages.config';
 
 const Footer = () => {
   return (
@@ -13,9 +14,9 @@ const Footer = () => {
         </div>
 
         <nav className={styles.nav}>
-          <Link href='/'>Главная</Link>
-          <Link href='/recipes'>Каталог рецептов</Link>
-          <Link href='/add'>Отправить рецепт</Link>
+          <Link href={PAGES.home.link}>Главная</Link>
+          <Link href={PAGES.recipes.link}>Каталог рецептов</Link>
+          <Link href={PAGES.addRecipe.link}>Отправить рецепт</Link>
         </nav>
 
         <div className={styles.right}>
