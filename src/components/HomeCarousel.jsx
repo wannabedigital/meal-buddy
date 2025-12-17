@@ -1,17 +1,28 @@
 'use client';
-import { useEffect, useState } from 'react';
-import CatalogFilter from '@ui/CatalogFilter';
+import { useState, useEffect } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+
 import RecipeCard from '@ui/RecipeCard';
 import RecipeInfo from '@ui/RecipeInfo';
 import Modal from '@ui/Modal';
 import { useAuthStore } from '@store/authStore';
-import { useCatalogFilterStore } from '@store/catalogFilterStore';
-import styles from '@styles/recipesList.module.css';
+import styles from '@styles/homeCarousel.module.css';
 
-const RecipesList = () => {
+const HomeCarousel = () => {
+  const [emblaRef] = useEmblaCarousel(
+    { loop: true, align: 'start', dragFree: false },
+    [
+      Autoplay({
+        delay: 5000,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    ]
+  );
+
   const { isAuth } = useAuthStore();
   const userId = useAuthStore((state) => state.user?.id ?? null);
-  const { selectedCategories, selectedTags } = useCatalogFilterStore();
 
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => {
@@ -19,32 +30,14 @@ const RecipesList = () => {
   };
 
   const limit = 4;
-  const [offset, setOffset] = useState(0);
-  const [categories, setCategories] = useState([]);
-  const [tags, setTags] = useState([]);
+  const offset = 0;
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   useEffect(() => {
-    fetchFilters();
-  }, []);
-
-  useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset, userId, setRecipes, selectedCategories, selectedTags]);
-
-  const fetchFilters = async () => {
-    try {
-      const res = await fetch('/api/recipes/filters');
-      if (!res.ok) return;
-      const data = await res.json();
-      setCategories(data.categories);
-      setTags(data.tags);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [userId, setRecipes]);
 
   const fetchList = async () => {
     const params = new URLSearchParams({
@@ -52,12 +45,9 @@ const RecipesList = () => {
       offset,
     });
     if (userId) params.append('user_id', userId);
-    if (selectedCategories.length)
-      params.append('categories', selectedCategories.join(','));
-    if (selectedTags.length) params.append('tags', selectedTags.join(','));
 
     try {
-      const res = await fetch(`/api/recipes/catalog?${params.toString()}`);
+      const res = await fetch(`/api/home/new?${params.toString()}`);
       if (!res.ok) {
         return;
       }
@@ -134,40 +124,25 @@ const RecipesList = () => {
 
   return (
     <section className={styles.recipeSection}>
-      <div className={styles.fullCatalog}>
-        <CatalogFilter categories={categories} tags={tags} />
-        <div className={styles.recipesList}>
-          {recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.recipe_id}
-              title={recipe.title}
-              onClick={() => fetchDetails(recipe.recipe_id)}
-              isAuth={isAuth}
-              favorited={recipe.favorited}
-              onLike={() => addFavorite(recipe.recipe_id)}
-              onDislike={() => deleteFavorite(recipe.recipe_id)}
-            />
-          ))}
+      <h2 className={styles.title}>Самые свежие рецепты</h2>
+      <div className={styles.recipesContainer}>
+        <div className={styles.embla} ref={emblaRef}>
+          <div className={styles.emblaContainer}>
+            {recipes.map((recipe) => (
+              <div className={styles.emblaSlide} key={recipe.recipe_id}>
+                <RecipeCard
+                  title={recipe.title}
+                  onClick={() => fetchDetails(recipe.recipe_id)}
+                  isAuth={isAuth}
+                  favorited={recipe.favorited}
+                  onLike={() => addFavorite(recipe.recipe_id)}
+                  onDislike={() => deleteFavorite(recipe.recipe_id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {recipes.length > 0 && (
-        <div className={styles.pagination}>
-          <button
-            onClick={() => setOffset(Math.max(0, offset - limit))}
-            disabled={offset === 0}
-          >
-            Предыдущая
-          </button>
-          <button
-            onClick={() => setOffset(Math.min(offset + limit, recipes.length))}
-            disabled={offset > recipes.length}
-          >
-            Следующая
-          </button>
-        </div>
-      )}
-
       {showModal && selectedRecipe && (
         <Modal onClose={toggleModal}>
           <RecipeInfo
@@ -188,4 +163,4 @@ const RecipesList = () => {
   );
 };
 
-export default RecipesList;
+export default HomeCarousel;
