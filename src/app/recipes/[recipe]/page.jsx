@@ -24,10 +24,13 @@ export default async function Recipe({ params }) {
   return (
     <main className={styles.page}>
       <RecipeInfo
+        id={recipeInfo.recipe_id}
         title={recipeInfo.title}
         description={recipeInfo.description}
         cookingTime={recipeInfo.cooking_time}
         difficulty={recipeInfo.difficulty}
+        categories={recipeInfo.categories}
+        tags={recipeInfo.tags}
         weight={recipeInfo.total_weight}
         calories={recipeInfo.total_calories}
         proteins={recipeInfo.total_proteins}

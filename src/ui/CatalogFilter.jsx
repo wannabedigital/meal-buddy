@@ -3,8 +3,13 @@ import styles from '@styles/catalogFilter.module.css';
 import { useCatalogFilterStore } from '@store/catalogFilterStore';
 
 const CatalogFilter = ({ categories, tags }) => {
-  const { selectedCategories, selectedTags, toggleCategory, toggleTag } =
-    useCatalogFilterStore();
+  const {
+    selectedCategories,
+    selectedTags,
+    toggleCategory,
+    toggleTag,
+    resetFilters,
+  } = useCatalogFilterStore();
 
   if (!categories || !tags) return null;
 
@@ -42,6 +47,14 @@ const CatalogFilter = ({ categories, tags }) => {
             <span>{tag.name}</span>
           </label>
         ))}
+      </div>
+      <div className={styles.filterReset}>
+        <button
+          className={styles.filterResetBtn}
+          onClick={() => resetFilters()}
+        >
+          Сбросить
+        </button>
       </div>
     </aside>
   );

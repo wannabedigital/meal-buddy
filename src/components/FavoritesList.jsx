@@ -61,6 +61,11 @@ const FavoritesList = () => {
         r.recipe_id === recipeId ? { ...r, favorited: true } : r
       )
     );
+    setSelectedRecipe((prev) =>
+      prev.map((r) =>
+        r.recipe_id === recipeId ? { ...r, favorited: true } : r
+      )
+    );
     try {
       const res = await fetch(`/api/favorites/${recipeId}`, {
         method: 'POST',
@@ -79,11 +84,17 @@ const FavoritesList = () => {
           r.recipe_id === recipeId ? { ...r, favorited: false } : r
         )
       );
+      setSelectedRecipe((prev) =>
+        prev.map((r) =>
+          r.recipe_id === recipeId ? { ...r, favorited: false } : r
+        )
+      );
     }
   }
 
   async function deleteFavorite(recipeId) {
     setRecipes((prev) => prev.filter((r) => r.recipe_id !== recipeId));
+    setSelectedRecipe((prev) => prev.filter((r) => r.recipe_id !== recipeId));
 
     try {
       const res = await fetch(`/api/favorites/${recipeId}`, {
@@ -107,6 +118,7 @@ const FavoritesList = () => {
         {recipes.map((recipe) => (
           <RecipeCard
             key={recipe.recipe_id}
+            id={recipe.recipe_id}
             title={recipe.title}
             onClick={() => fetchDetails(recipe.recipe_id)}
             isAuth={isAuth}
@@ -141,10 +153,13 @@ const FavoritesList = () => {
       {showModal && selectedRecipe && (
         <Modal onClose={toggleModal}>
           <RecipeInfo
+            id={selectedRecipe.recipe_id}
             title={selectedRecipe.title}
             description={selectedRecipe.description}
             cookingTime={selectedRecipe.cooking_time}
             difficulty={selectedRecipe.difficulty}
+            categories={selectedRecipe.categories}
+            tags={selectedRecipe.tags}
             weight={selectedRecipe.total_weight}
             calories={selectedRecipe.total_calories}
             proteins={selectedRecipe.total_proteins}

@@ -13,6 +13,7 @@ const Footer = () => {
         </div>
 
         <nav className={styles.nav}>
+          <Link href='/'>Главная</Link>
           <Link href='/recipes'>Каталог рецептов</Link>
           <Link href='/add'>Отправить рецепт</Link>
         </nav>

@@ -71,7 +71,7 @@ const RecipesList = () => {
   const fetchDetails = async (recipeId) => {
     setSelectedRecipe(null);
     try {
-      const res = await fetch(`/api/recipes/${recipeId}`);
+      const res = await fetch(`/api/recipes/${recipeId}?user_id=${userId}`);
       if (!res.ok) {
         return;
       }
@@ -136,20 +136,26 @@ const RecipesList = () => {
     <section className={styles.recipeSection}>
       <div className={styles.fullCatalog}>
         <CatalogFilter categories={categories} tags={tags} />
-        <div className={styles.recipesList}>
-          {recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.recipe_id}
-              id={recipe.recipe_id}
-              title={recipe.title}
-              onClick={() => fetchDetails(recipe.recipe_id)}
-              isAuth={isAuth}
-              favorited={recipe.favorited}
-              onLike={() => addFavorite(recipe.recipe_id)}
-              onDislike={() => deleteFavorite(recipe.recipe_id)}
-            />
-          ))}
-        </div>
+        {recipes.length > 0 ? (
+          <div className={styles.recipesList}>
+            {recipes.map((recipe) => (
+              <RecipeCard
+                key={recipe.recipe_id}
+                id={recipe.recipe_id}
+                title={recipe.title}
+                onClick={() => fetchDetails(recipe.recipe_id)}
+                isAuth={isAuth}
+                favorited={recipe.favorited}
+                onLike={() => addFavorite(recipe.recipe_id)}
+                onDislike={() => deleteFavorite(recipe.recipe_id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className={styles.noRecipes}>
+            Рецепты не найдены попробуйте сбросить фильтры
+          </div>
+        )}
       </div>
 
       {recipes.length > 0 && (
@@ -172,16 +178,23 @@ const RecipesList = () => {
       {showModal && selectedRecipe && (
         <Modal onClose={toggleModal}>
           <RecipeInfo
+            id={selectedRecipe.recipe_id}
             title={selectedRecipe.title}
             description={selectedRecipe.description}
             cookingTime={selectedRecipe.cooking_time}
             difficulty={selectedRecipe.difficulty}
+            categories={selectedRecipe.categories}
+            tags={selectedRecipe.tags}
             weight={selectedRecipe.total_weight}
             calories={selectedRecipe.total_calories}
             proteins={selectedRecipe.total_proteins}
             fats={selectedRecipe.total_fats}
             carbons={selectedRecipe.total_carbs}
             path={`/recipes/${selectedRecipe.recipe_id}`}
+            isAuth={isAuth}
+            favorited={selectedRecipe.favorited}
+            onLike={() => addFavorite(selectedRecipe.recipe_id)}
+            onDislike={() => deleteFavorite(selectedRecipe.recipe_id)}
           />
         </Modal>
       )}

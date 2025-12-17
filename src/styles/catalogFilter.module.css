@@ -9,6 +9,7 @@
   outline: solid 2px var(--input-outline);
   min-height: 400px;
   max-height: max-content;
+  margin-bottom: 120px;
 }
 
 .filterList {
@@ -66,4 +67,18 @@
 
 .checkboxInput:not(:checked) + .customCheckbox {
   outline: 2px solid var(--input-outline);
+}
+
+.filterResetBtn {
+  width: 100%;
+  padding: 16px 16px;
+  border-radius: 4px;
+  background-color: var(--btn-active-bg);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  transition: transform 0.2s ease-in;
+  margin-bottom: 12px;
+}
+
+.filterResetBtn:hover {
+  transform: scale(1.01);
 }
