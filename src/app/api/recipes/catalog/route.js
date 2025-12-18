@@ -22,6 +22,41 @@ export async function GET(request) {
     const parsedTags = tagsParam ? tagsParam.split(',').map(Number) : null;
     const tags = parsedTags && parsedTags.length ? parsedTags : null;
 
+    const totalQuery = `
+      SELECT COUNT(*)
+      FROM published_recipes_view r
+      WHERE
+        (
+          $1::int[] IS NULL
+          OR (
+            SELECT COUNT(DISTINCT rc.category_id)
+            FROM recipe_categories rc
+            WHERE rc.recipe_id = r.recipe_id
+              AND rc.category_id = ANY($1)
+          ) = array_length($1, 1)
+        )
+      AND
+        (
+          $2::int[] IS NULL
+          OR (
+            SELECT COUNT(DISTINCT rt.tag_id)
+            FROM recipe_tags rt
+            WHERE rt.recipe_id = r.recipe_id
+              AND rt.tag_id = ANY($2)
+          ) = array_length($2, 1)
+        )
+    `;
+
+    const totalRecipesResult = await pool.query(totalQuery, [categories, tags]);
+
+    const totalRecipes = totalRecipesResult.rows[0].count;
+
+    if (totalRecipes === 0)
+      return NextResponse.json(
+        { totalRecipes: 0, recipes: [] },
+        { status: 200 }
+      );
+
     const recipesQuery = `
       SELECT
         r.recipe_id,
@@ -73,7 +108,10 @@ export async function GET(request) {
     ]);
     const recipes = result.rows;
 
-    return NextResponse.json({ recipes }, { status: 200 });
+    return NextResponse.json(
+      { totalRecipes: totalRecipes, recipes: recipes },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('GET /api/recipes/catalog error:', error);
     return NextResponse.json({ message: 'Ошибка сервера' }, { status: 500 });

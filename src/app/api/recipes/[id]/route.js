@@ -101,8 +101,6 @@ export async function GET(request, { params }) {
       );
     }
 
-    console.log('Флаг:', result.rows[0].favorited);
-
     return NextResponse.json({ recipe: result.rows[0] }, { status: 200 });
   } catch (error) {
     console.error(`GET /api/recipes/${params.id} error:`, error);

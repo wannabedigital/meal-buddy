@@ -8,15 +8,15 @@ const HomeOffer = () => {
     <section className={styles.mainOffer}>
       <div className={styles.offerContent}>
         <h1 className={styles.offerTitle}>
-          Твоя новая пара вкусных рецептов с доставкой прямо в кухню
+          Готовьте легко, вкусно и с радостью!
         </h1>
         <div className={styles.divider} />
         <p className={styles.offerSubtitle}>
-          Онлайн-кулинария для хорошего настроения – готовим легко и с
-          удовольствием
+          Забудьте о «что приготовить?» — подберём идеальное блюдо под ваше
+          настроение, продукты в холодильнике и время на готовку.
         </p>
         <Link href='/recipes' className={styles.buttonLink}>
-          <button className={styles.offerButton}>Посмотреть каталог</button>
+          <button className={styles.offerButton}>Перейти к рецептам</button>
         </Link>
       </div>
       <div className={styles.offerImgWrapper}>

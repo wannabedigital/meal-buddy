@@ -1,16 +1,15 @@
 .mainOffer {
   width: 100%;
   max-width: min(1280px, 100% - 40px);
-  margin: 80px auto 120px;
+  margin: 20px auto 120px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
   padding-left: 40px;
 }
 
 .offerContent {
-  width: 500px;
+  width: 46%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,22 +17,27 @@
 }
 
 .offerTitle {
+  font-size: 4.8rem;
   font-weight: 700;
-  color: #f57f17;
+  color: #b65c0e;
   margin-bottom: 30px;
-}
-
-.offerSubtitle {
-  color: #f9a825;
-  margin-bottom: 48px;
 }
 
 .divider {
   width: 100%;
-  height: 4px;
+  height: 1px;
   background-color: #ffeb3b;
   margin-bottom: 30px;
   border-radius: 2px;
+  animation: glow 2s infinite;
+  outline: 2px solid #ffeb3b40;
+  margin-bottom: 40px;
+}
+
+.offerSubtitle {
+  font-size: 2.4rem;
+  color: #9a6817;
+  margin-bottom: 48px;
 }
 
 .buttonLink {
@@ -47,25 +51,77 @@
   color: #f9f9f9;
   font-weight: 600;
   border: none;
-  padding: 20px;
+  padding: 24px 16px;
   border-radius: 4px;
-  box-shadow: 0 8px 25px 5px var(--box-shadow);
+  box-shadow: 0 4px 8px 0 var(--box-shadow);
   cursor: pointer;
   transition: opacity 0.3s ease;
-  transition: transform 0.3s ease;
+  animation: glow 2s infinite;
 }
 
 .offerButton:hover {
-  transform: scale(1.05);
   opacity: 0.9;
+  animation-play-state: paused;
 }
 
 .offerImgWrapper {
   position: relative;
-  width: 800px;
-  aspect-ratio: 1.5;
+  right: -20%;
+  width: 70%;
+  aspect-ratio: 1;
 }
 
 .offerImgWrapper img {
   object-fit: contain;
+}
+
+@keyframes glow {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.002);
+  }
+  20% {
+    transform: scale(1.004);
+  }
+  30% {
+    transform: scale(1.006);
+  }
+  40% {
+    transform: scale(1.008);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  60% {
+    transform: scale(1.008);
+  }
+  70% {
+    transform: scale(1.006);
+  }
+  80% {
+    transform: scale(1.004);
+  }
+  90% {
+    transform: scale(1.002);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .mainOffer {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .offerContent {
+    width: 100%;
+  }
+
+  .offerImgWrapper {
+    display: none;
+  }
 }

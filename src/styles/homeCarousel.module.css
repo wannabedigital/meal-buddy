@@ -34,3 +34,14 @@
   display: flex;
   padding: 10px 40px;
 }
+
+@media (max-width: 768px) {
+  .emblaSlide {
+    flex: 0 0 100%;
+    padding: 8px 20px;
+  }
+
+  .title {
+    padding: 0 20px;
+  }
+}

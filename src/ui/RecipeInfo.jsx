@@ -130,8 +130,7 @@ const RecipeInfo = ({
           {!!categories && (
             <div className={styles.specs}>
               <p>
-                <strong>Время готовки: </strong>
-
+                <strong>Категории: </strong>
                 {categories.map((category) => (
                   <span className={styles.catsAndTags} key={category.id}>
                     &laquo;{category.name}&raquo;{'  '}
@@ -143,7 +142,7 @@ const RecipeInfo = ({
           {!!tags && (
             <div className={styles.specs}>
               <p>
-                <strong>Время готовки: </strong>
+                <strong>Теги: </strong>
                 {tags.map((tag) => (
                   <span className={styles.catsAndTags} key={tag.id}>
                     &laquo;{tag.name}&raquo;{'  '}

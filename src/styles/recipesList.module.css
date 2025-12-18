@@ -44,3 +44,14 @@
   font-weight: 600;
   padding: 40px;
 }
+
+@media (max-width: 768px) {
+  .fullCatalog {
+    flex-direction: column;
+  }
+
+  .recipesList {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

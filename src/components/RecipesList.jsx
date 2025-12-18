@@ -24,6 +24,7 @@ const RecipesList = () => {
   const [tags, setTags] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [totalRecipes, setTotalRecipes] = useState(0);
 
   useEffect(() => {
     fetchFilters();
@@ -63,6 +64,7 @@ const RecipesList = () => {
       }
       const data = await res.json();
       setRecipes(data.recipes || []);
+      setTotalRecipes(data.totalRecipes || 0);
     } catch (error) {
       console.error(error);
     }
@@ -136,7 +138,7 @@ const RecipesList = () => {
     <section className={styles.recipeSection}>
       <div className={styles.fullCatalog}>
         <CatalogFilter categories={categories} tags={tags} />
-        {recipes.length > 0 ? (
+        {totalRecipes > 0 ? (
           <div className={styles.recipesList}>
             {recipes.map((recipe) => (
               <RecipeCard
@@ -158,17 +160,17 @@ const RecipesList = () => {
         )}
       </div>
 
-      {recipes.length > 0 && (
+      {totalRecipes > 0 && (offset > 0 || offset + limit < totalRecipes) && (
         <div className={styles.pagination}>
           <button
             onClick={() => setOffset(Math.max(0, offset - limit))}
-            disabled={offset === 0}
+            disabled={!(offset > 0)}
           >
             Предыдущая
           </button>
           <button
             onClick={() => setOffset(Math.min(offset + limit, recipes.length))}
-            disabled={offset > recipes.length}
+            disabled={!(offset + limit < totalRecipes)}
           >
             Следующая
           </button>
