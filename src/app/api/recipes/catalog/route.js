@@ -22,6 +22,13 @@ export async function GET(request) {
     const parsedTags = tagsParam ? tagsParam.split(',').map(Number) : null;
     const tags = parsedTags && parsedTags.length ? parsedTags : null;
 
+    const ingredientsParam = url.searchParams.get('ingredients');
+    const parsedIngredients = ingredientsParam
+      ? ingredientsParam.split(',').map(Number)
+      : null;
+    const ingredients =
+      parsedIngredients && parsedIngredients.length ? parsedIngredients : null;
+
     const totalQuery = `
       SELECT COUNT(*)
       FROM published_recipes_view r
@@ -45,9 +52,23 @@ export async function GET(request) {
               AND rt.tag_id = ANY($2)
           ) = array_length($2, 1)
         )
+      AND
+        (
+          $3::int[] IS NULL
+          OR (
+            SELECT COUNT(DISTINCT ri.ingredient_id)
+            FROM recipe_ingredients ri
+            WHERE ri.recipe_id = r.recipe_id
+              AND ri.ingredient_id = ANY($3)
+          ) = array_length($3, 1)
+        )
     `;
 
-    const totalRecipesResult = await pool.query(totalQuery, [categories, tags]);
+    const totalRecipesResult = await pool.query(totalQuery, [
+      categories,
+      tags,
+      ingredients,
+    ]);
 
     const totalRecipes = totalRecipesResult.rows[0].count;
 
@@ -94,6 +115,16 @@ export async function GET(request) {
               AND rt.tag_id = ANY($5)
           ) = array_length($5, 1)
         )
+      AND
+        (
+          $6::int[] IS NULL
+          OR (
+            SELECT COUNT(DISTINCT ri.ingredient_id)
+            FROM recipe_ingredients ri
+            WHERE ri.recipe_id = r.recipe_id
+              AND ri.ingredient_id = ANY($6)
+          ) = array_length($6, 1)
+        )
 
       ORDER BY r.published_at DESC
       LIMIT $1 OFFSET $2;
@@ -105,6 +136,7 @@ export async function GET(request) {
       user_id,
       categories,
       tags,
+      ingredients,
     ]);
     const recipes = result.rows;
 

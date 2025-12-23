@@ -11,7 +11,8 @@ import styles from '@styles/recipesList.module.css';
 const RecipesList = () => {
   const { isAuth } = useAuthStore();
   const userId = useAuthStore((state) => state.user?.id ?? null);
-  const { selectedCategories, selectedTags } = useCatalogFilterStore();
+  const { selectedCategories, selectedTags, selectedIngredients } =
+    useCatalogFilterStore();
 
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => {
@@ -22,6 +23,7 @@ const RecipesList = () => {
   const [offset, setOffset] = useState(0);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [totalRecipes, setTotalRecipes] = useState(0);
@@ -33,7 +35,14 @@ const RecipesList = () => {
   useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset, userId, setRecipes, selectedCategories, selectedTags]);
+  }, [
+    offset,
+    userId,
+    setRecipes,
+    selectedCategories,
+    selectedTags,
+    selectedIngredients,
+  ]);
 
   const fetchFilters = async () => {
     try {
@@ -42,6 +51,7 @@ const RecipesList = () => {
       const data = await res.json();
       setCategories(data.categories);
       setTags(data.tags);
+      setIngredients(data.ingredients);
     } catch (error) {
       console.log(error);
     }
@@ -56,6 +66,8 @@ const RecipesList = () => {
     if (selectedCategories.length)
       params.append('categories', selectedCategories.join(','));
     if (selectedTags.length) params.append('tags', selectedTags.join(','));
+    if (selectedIngredients.length)
+      params.append('ingredients', selectedIngredients.join(','));
 
     try {
       const res = await fetch(`/api/recipes/catalog?${params.toString()}`);
@@ -137,7 +149,11 @@ const RecipesList = () => {
   return (
     <section className={styles.recipeSection}>
       <div className={styles.fullCatalog}>
-        <CatalogFilter categories={categories} tags={tags} />
+        <CatalogFilter
+          categories={categories}
+          tags={tags}
+          ingredients={ingredients}
+        />
         {totalRecipes > 0 ? (
           <div className={styles.recipesList}>
             {recipes.map((recipe) => (
