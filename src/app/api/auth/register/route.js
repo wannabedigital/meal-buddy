@@ -58,6 +58,6 @@ export async function POST(request) {
   } catch (error) {
     console.log(error);
 
-    return NextResponse.json({ message: 'Ошибка' }, { status: 500 });
+    return NextResponse.json({ message: 'Ошибка сервера' }, { status: 500 });
   }
 }

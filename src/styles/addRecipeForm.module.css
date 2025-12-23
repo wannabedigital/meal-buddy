@@ -1,3 +1,218 @@
-.body {
+.recipeForm {
   display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+.fieldLabel,
+.blockTitle {
+  font-size: 2rem;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fieldContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputField,
+.textareaField,
+.selectField {
+  font-family: var(--font-nunito);
+  width: 100%;
+  font-size: 1.6rem;
+  padding: 20px;
+  border-radius: 3px;
+  border: none;
+  background-color: #ffffff;
+  outline: 2px solid var(--input-outline);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.inputField:focus,
+.textareaField:focus,
+.selectField:focus {
+  outline: 2px solid var(--input-outline-focus);
+  animation: glow 3s ease-in-out infinite;
+}
+
+.textareaField {
+  border: none;
+  resize: none;
+  min-height: 200px;
+}
+
+.inputField::placeholder,
+.textareaField::placeholder,
+.selectField::placeholder {
+  color: var(--secondary-text);
+  opacity: 0.7;
+}
+
+.addBtn {
+  margin-top: 20px;
+}
+
+.agreeContainer {
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ingredientRow,
+.stepRow {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.checkboxGrid {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.customCheckbox::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+  background: url("data:image/svg+xml,%3Csvg fill='%23ffba6a' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.00039 10.8004L3.20039 8.00039L2.26606 8.93472L6.00039 12.6691L14.0004 4.66906L13.0661 3.73472L6.00039 10.8004Z'/%3E%3C/svg%3E")
+    center/contain no-repeat;
+}
+
+.customCheckbox {
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  outline: 2px solid var(--input-outline-focus);
+}
+
+.checkboxInput:checked + .customCheckbox {
+  outline: 2px solid var(--input-outline-focus);
+}
+
+.checkboxInput:checked + .customCheckbox::after {
+  opacity: 1;
+  transform: scale(2);
+}
+
+.legalLink {
+  font-weight: 700;
+}
+
+.changeModeBtn {
+  font-size: 1.6rem;
+  margin-left: 10px;
+  color: var(--link-text);
+  transition: color 0.2s ease;
+}
+
+.changeModeBtn:hover {
+  color: var(--link-text-hover);
+}
+
+.buttonContainer {
+  width: 30%;
+  min-width: max-content;
+  aspect-ratio: 4;
+  box-shadow: 0 4px 16px var(--box-shadow);
+}
+
+.submitButton {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: var(--btn-active-bg);
+  color: var(--btn-text);
+  font-size: 2.4rem;
+  padding: 20px 40px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .buttonContainer {
+    width: 40%;
+    aspect-ratio: 3;
+  }
+
+  .authForm {
+    gap: 20px;
+  }
+
+  .inputField {
+    min-height: 40px;
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+
+  .customCheckbox {
+    width: 16px;
+  }
+}
+
+@keyframes glow {
+  0% {
+    outline: 2px solid #ffba6a40;
+  }
+  15% {
+    outline: 2px solid #ffba6a66;
+  }
+  30% {
+    outline: 2px solid #ffba6a90;
+  }
+  50% {
+    outline: 2px solid #ffba6aff;
+  }
+  65% {
+    outline: 2px solid #ffba6a90;
+  }
+  90% {
+    outline: 2px solid #ffba6a66;
+  }
+  100% {
+    outline: 2px solid #ffba6a40;
+  }
 }

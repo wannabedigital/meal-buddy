@@ -154,6 +154,14 @@
   transform: scale(1.05);
 }
 
+.addRecipeForm {
+  width: 100%;
+  max-width: min(1280px, 100% - 40px);
+  min-height: fit-content;
+  margin: 0 auto;
+  margin-top: 120px;
+}
+
 @media (max-width: 768px) {
   .buttonContainer {
     width: 40%;
