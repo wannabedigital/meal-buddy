@@ -19,8 +19,8 @@
   z-index: 6;
   margin-top: -10%;
   margin-left: 30px;
-  width: 16%;
-  aspect-ratio: 1;
+  width: 200px;
+  height: 200px;
   background-color: var(--btn-neutral-bg);
   border-radius: 50%;
 }
@@ -51,7 +51,7 @@
 }
 
 .optionsBtn {
-  width: 5%;
+  width: 64px;
   aspect-ratio: 1;
   position: relative;
   z-index: 4;
@@ -59,6 +59,11 @@
 }
 
 @media (max-width: 768px) {
+  .profilePhotoWrapper {
+    width: 64px;
+    height: 64px;
+  }
+
   .profileInfo {
     gap: 10px;
     width: 70%;
@@ -74,6 +79,6 @@
 
   .optionsBtn {
     width: 48px;
-    margin-top: -64px;
+    margin-top: -48px;
   }
 }

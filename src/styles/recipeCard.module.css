@@ -42,6 +42,8 @@
 }
 
 .goToRecipe {
+  font-family: var(--font-nunito);
+  color: var(--main-text);
   padding: 16px 16px;
   border-radius: 4px;
   background-color: var(--btn-active-bg);
@@ -52,4 +54,15 @@
 .goToRecipe:hover {
   transform: scale(1.02);
   transition: transform 0.2s ease-out;
+}
+
+@media (max-width: 768px) {
+  .recipeCard {
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .recipeTitle {
+    min-height: 40px;
+  }
 }

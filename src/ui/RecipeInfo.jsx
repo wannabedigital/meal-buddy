@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '@styles/recipeInfo.module.css';
+import FavoriteButton from '@ui/FavoriteButton';
 
 const NutritionalValue = ({
   weight = 0,
@@ -47,16 +49,23 @@ const StarRating = ({ rating = 0 }) => {
 };
 
 const RecipeInfo = ({
+  id,
   title,
   description,
   cookingTime,
   difficulty,
+  categories,
+  tags,
   path = null,
   weight = 100,
   calories = 0,
   proteins = 0,
   fats = 0,
   carbons = 0,
+  isAuth,
+  favorited,
+  onLike,
+  onDislike,
 }) => {
   const roundedWeight = Math.round(weight * 100) / 100;
   const roundedCalories = Math.round(calories * 100) / 100;
@@ -67,7 +76,14 @@ const RecipeInfo = ({
   return (
     <div className={styles.recipeInfo}>
       <div className={styles.header}>
-        <div className={styles.recipePhotoWrapper}>Здесь будет фото блюда</div>
+        <div className={styles.recipePhotoWrapper}>
+          <Image
+            src={`/img/recipes/${id}.png`}
+            alt='recipe img'
+            fill
+            loading='eager'
+          />
+        </div>
         <div className={styles.recipeName}>
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.description}>{description}</p>
@@ -88,6 +104,14 @@ const RecipeInfo = ({
                 Перейти
               </Link>
             )}
+            {favorited !== null && favorited !== undefined && (
+              <FavoriteButton
+                isAuth={isAuth}
+                favorited={favorited}
+                onLike={onLike}
+                onDislike={onDislike}
+              />
+            )}
           </div>
         </div>
         <div className={styles.leftContainer}>
@@ -103,6 +127,30 @@ const RecipeInfo = ({
               <StarRating rating={difficulty} />
             </p>
           </div>
+          {!!categories && (
+            <div className={styles.specs}>
+              <p>
+                <strong>Категории: </strong>
+                {categories.map((category) => (
+                  <span className={styles.catsAndTags} key={category.id}>
+                    &laquo;{category.name}&raquo;{'  '}
+                  </span>
+                ))}
+              </p>
+            </div>
+          )}
+          {!!tags && (
+            <div className={styles.specs}>
+              <p>
+                <strong>Теги: </strong>
+                {tags.map((tag) => (
+                  <span className={styles.catsAndTags} key={tag.id}>
+                    &laquo;{tag.name}&raquo;{'  '}
+                  </span>
+                ))}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

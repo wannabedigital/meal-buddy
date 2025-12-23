@@ -131,6 +131,7 @@ const HomeCarousel = () => {
             {recipes.map((recipe) => (
               <div className={styles.emblaSlide} key={recipe.recipe_id}>
                 <RecipeCard
+                  id={recipe.recipe_id}
                   title={recipe.title}
                   onClick={() => fetchDetails(recipe.recipe_id)}
                   isAuth={isAuth}
@@ -146,10 +147,13 @@ const HomeCarousel = () => {
       {showModal && selectedRecipe && (
         <Modal onClose={toggleModal}>
           <RecipeInfo
+            id={selectedRecipe.recipe_id}
             title={selectedRecipe.title}
             description={selectedRecipe.description}
             cookingTime={selectedRecipe.cooking_time}
             difficulty={selectedRecipe.difficulty}
+            categories={selectedRecipe.categories}
+            tags={selectedRecipe.tags}
             weight={selectedRecipe.total_weight}
             calories={selectedRecipe.total_calories}
             proteins={selectedRecipe.total_proteins}

@@ -11,6 +11,7 @@
 }
 
 .recipePhotoWrapper {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +20,11 @@
   background-color: var(--btn-neutral-bg);
   border-radius: 4px;
   overflow: hidden;
+  outline: 2px solid var(--input-outline);
+}
+
+.recipePhotoWrapper img {
+  object-fit: cover;
 }
 
 .recipeName {

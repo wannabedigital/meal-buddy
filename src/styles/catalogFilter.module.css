@@ -9,6 +9,7 @@
   outline: solid 2px var(--input-outline);
   min-height: 400px;
   max-height: max-content;
+  margin-bottom: 120px;
 }
 
 .filterList {
@@ -66,4 +67,104 @@
 
 .checkboxInput:not(:checked) + .customCheckbox {
   outline: 2px solid var(--input-outline);
+}
+
+.filterResetBtn,
+.filterSetBtn {
+  width: 100%;
+  padding: 16px 16px;
+  border-radius: 4px;
+  background-color: var(--btn-danger-bg);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  transition: transform 0.2s ease-in;
+  margin-bottom: 12px;
+}
+
+.filterSetBtn {
+  display: none;
+  background-color: var(--btn-active-bg);
+}
+
+.filterResetBtn:hover,
+.filterSetBtn:hover {
+  transform: scale(1.01);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 90;
+}
+
+.mobileFilterBtn {
+  display: none;
+  margin-bottom: -40px;
+}
+
+.closeFilterBtn {
+  display: none;
+  width: 32px;
+  aspect-ratio: 1;
+}
+
+@media (max-width: 768px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filterMobile {
+    max-width: fit-content;
+    position: absolute;
+    top: 64px;
+    left: -1000%;
+    right: 0;
+    z-index: 100;
+    transition: left 0.3s ease;
+    border-radius: 16px 16px 0 0;
+    outline: none;
+  }
+
+  .filterMobileOpen {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: left 0.3s ease;
+    outline: none;
+  }
+
+  .mobileFilterWrapper {
+    position: relative;
+    z-index: -10;
+    width: 32px;
+    height: 32px;
+    padding-top: 2px;
+    background-color: var(--btn-active-bg);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+  }
+
+  .mobileFilterBtn {
+    font-family: var(--font-nunito);
+    color: var(--btn-text);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .closeFilterBtn {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .filterSetBtn {
+    display: block;
+  }
 }
