@@ -5,7 +5,7 @@ import styles from '@styles/catalogFilter.module.css';
 import { useCatalogFilterStore } from '@store/catalogFilterStore';
 import { FilterIcon, Close } from '@ui/Icons';
 
-const CatalogFilter = ({ categories, tags }) => {
+const CatalogFilter = ({ categories, tags, ingredients }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleFilter = () => {
@@ -15,12 +15,14 @@ const CatalogFilter = ({ categories, tags }) => {
   const {
     selectedCategories,
     selectedTags,
+    selectedIngredients,
     toggleCategory,
     toggleTag,
+    toggleIngredient,
     resetFilters,
   } = useCatalogFilterStore();
 
-  if (!categories || !tags) return null;
+  if (!categories && !tags && !ingredients) return null;
 
   return (
     <>
@@ -47,37 +49,65 @@ const CatalogFilter = ({ categories, tags }) => {
           </button>
         </div>
 
-        <h3>Категории</h3>
-        <div className={styles.filterList}>
-          {categories.map((category) => (
-            <label key={category.id} className={styles.checkboxLabel}>
-              <input
-                className={styles.checkboxInput}
-                type='checkbox'
-                checked={selectedCategories.includes(category.id)}
-                onChange={() => toggleCategory(category.id)}
-              />
-              <span className={styles.customCheckbox} />
-              <span>{category.name}</span>
-            </label>
-          ))}
-        </div>
+        {categories && (
+          <details className={styles.filterDetails}>
+            <summary className={styles.filterSummary}>Категории</summary>
+            <div className={styles.filterList}>
+              {categories.map((category) => (
+                <label key={category.id} className={styles.checkboxLabel}>
+                  <input
+                    className={styles.checkboxInput}
+                    type='checkbox'
+                    checked={selectedCategories.includes(category.id)}
+                    onChange={() => toggleCategory(category.id)}
+                  />
+                  <span className={styles.customCheckbox} />
+                  <span>{category.name}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+        )}
 
-        <h3>Теги</h3>
-        <div className={styles.filterList}>
-          {tags.map((tag) => (
-            <label key={tag.id} className={styles.checkboxLabel}>
-              <input
-                className={styles.checkboxInput}
-                type='checkbox'
-                checked={selectedTags.includes(tag.id)}
-                onChange={() => toggleTag(tag.id)}
-              />
-              <span className={styles.customCheckbox} />
-              <span>{tag.name}</span>
-            </label>
-          ))}
-        </div>
+        {tags && (
+          <details className={styles.filterDetails}>
+            <summary className={styles.filterSummary}>Теги</summary>
+            <div className={styles.filterList}>
+              {tags.map((tag) => (
+                <label key={tag.id} className={styles.checkboxLabel}>
+                  <input
+                    className={styles.checkboxInput}
+                    type='checkbox'
+                    checked={selectedTags.includes(tag.id)}
+                    onChange={() => toggleTag(tag.id)}
+                  />
+                  <span className={styles.customCheckbox} />
+                  <span>{tag.name}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+        )}
+
+        {ingredients && (
+          <details className={styles.filterDetails}>
+            <summary className={styles.filterSummary}>Ингредиенты</summary>
+            <div className={styles.filterList}>
+              {ingredients.map((ingredient) => (
+                <label key={ingredient.id} className={styles.checkboxLabel}>
+                  <input
+                    className={styles.checkboxInput}
+                    type='checkbox'
+                    checked={selectedIngredients.includes(ingredient.id)}
+                    onChange={() => toggleIngredient(ingredient.id)}
+                  />
+                  <span className={styles.customCheckbox} />
+                  <span>{ingredient.name}</span>
+                </label>
+              ))}
+            </div>
+          </details>
+        )}
         <div className={styles.filterReset}>
           <button
             className={styles.filterResetBtn}

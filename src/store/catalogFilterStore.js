@@ -5,6 +5,7 @@ export const useCatalogFilterStore = create(
   persist((set) => ({
     selectedCategories: [],
     selectedTags: [],
+    selectedIngredients: [],
 
     toggleCategory: (id) =>
       set((state) => ({
@@ -20,10 +21,18 @@ export const useCatalogFilterStore = create(
           : [...state.selectedTags, id],
       })),
 
+    toggleIngredient: (id) =>
+      set((state) => ({
+        selectedIngredients: state.selectedIngredients.includes(id)
+          ? state.selectedIngredients.filter((t) => t !== id)
+          : [...state.selectedIngredients, id],
+      })),
+
     resetFilters: () =>
       set({
         selectedCategories: [],
         selectedTags: [],
+        selectedIngredients: [],
       }),
   })),
   {

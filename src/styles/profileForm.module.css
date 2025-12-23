@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   width: 30%;
-  min-width: max-content;
+  min-width: fit-content;
   aspect-ratio: 4;
   box-shadow: 0 4px 16px var(--box-shadow);
 }
@@ -76,9 +76,20 @@
 }
 
 @media (max-width: 768px) {
+  .btnFlexContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
   .buttonContainer {
-    width: 40%;
-    aspect-ratio: 3;
+    width: 82%;
+  }
+
+  .submitButton,
+  .logoutButton {
+    width: 100%;
   }
 
   .authForm {

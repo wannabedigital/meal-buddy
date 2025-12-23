@@ -8,7 +8,7 @@
 
 .headerFlexBox {
   position: relative;
-  z-index: 2;
+  z-index: 5;
   width: 100%;
   max-width: min(1280px, 100% - 40px);
   margin: 0 auto;
@@ -23,7 +23,7 @@
 .headerBg {
   position: absolute;
   top: 0%;
-  z-index: 1;
+  z-index: 4;
   width: 100%;
   height: 100%;
   background-color: var(--main-bg);
@@ -145,7 +145,7 @@
     display: block;
     position: absolute;
     top: -300%;
-    z-index: 0;
+    z-index: 3;
     transition: 0.2s top;
     background-color: var(--secondary-bg);
   }

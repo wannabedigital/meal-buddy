@@ -12,6 +12,37 @@
   margin-bottom: 120px;
 }
 
+.filterDetails::details-content {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+}
+
+.filterDetails[open]::details-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s ease-in-out;
+}
+
+.filterDetails .filterSummary::marker,
+:is(::-webkit-details-marker) {
+  content: '+ ';
+  font-size: 3.2rem;
+  font-weight: 800;
+}
+
+.filterDetails[open] .filterSummary::marker {
+  content: '− ';
+  font-size: 3.2rem;
+  font-weight: 800;
+}
+
+.filterSummary {
+  margin-bottom: 20px;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
 .filterList {
   display: flex;
   flex-direction: column;

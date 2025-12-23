@@ -9,9 +9,14 @@ export async function GET() {
 
     const tags = await pool.query('SELECT id, name FROM tags ORDER BY name');
 
+    const ingredients = await pool.query(
+      'SELECT id, name FROM ingredients ORDER BY name'
+    );
+
     return NextResponse.json({
       categories: categories.rows,
       tags: tags.rows,
+      ingredients: ingredients.rows,
     });
   } catch (error) {
     console.error(error);

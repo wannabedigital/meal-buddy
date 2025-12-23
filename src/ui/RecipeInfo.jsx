@@ -56,6 +56,7 @@ const RecipeInfo = ({
   difficulty,
   categories,
   tags,
+  ingredients,
   path = null,
   weight = 100,
   calories = 0,
@@ -146,6 +147,18 @@ const RecipeInfo = ({
                 {tags.map((tag) => (
                   <span className={styles.catsAndTags} key={tag.id}>
                     &laquo;{tag.name}&raquo;{'  '}
+                  </span>
+                ))}
+              </p>
+            </div>
+          )}
+          {!!ingredients && (
+            <div className={styles.specs}>
+              <p>
+                <strong>Ингридиенты: </strong>
+                {ingredients.map((ingredient) => (
+                  <span className={styles.catsAndTags} key={ingredient.id}>
+                    &laquo;{ingredient.name}&raquo;{'  '}
                   </span>
                 ))}
               </p>
