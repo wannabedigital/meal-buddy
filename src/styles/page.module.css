@@ -5,7 +5,7 @@
 
 .profile {
   position: relative;
-  z-index: 2;
+  z-index: -5;
   top: 0px;
   width: 100%;
   max-width: min(1280px, 100% - 40px);

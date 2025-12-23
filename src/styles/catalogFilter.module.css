@@ -108,41 +108,44 @@
   aspect-ratio: 1;
 }
 
-.filterMobile {
-  max-width: fit-content;
-  position: absolute;
-  top: 64px;
-  left: -1000%;
-  right: 0;
-  z-index: 100;
-  transition: left 0.3s ease;
-  border-radius: 16px 16px 0 0;
-  outline: none;
-}
-
-.filterMobileOpen {
-  position: absolute;
-  top: 64px;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  transition: left 0.3s ease;
-  outline: none;
-}
-
-.mobileFilterWrapper {
-  position: relative;
-  width: 32px;
-  aspect-ratio: 1;
-  padding-top: 2px;
-  background-color: var(--btn-active-bg);
-}
-
 @media (max-width: 768px) {
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .filterMobile {
+    max-width: fit-content;
+    position: absolute;
+    top: 64px;
+    left: -1000%;
+    right: 0;
+    z-index: 100;
+    transition: left 0.3s ease;
+    border-radius: 16px 16px 0 0;
+    outline: none;
+  }
+
+  .filterMobileOpen {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: left 0.3s ease;
+    outline: none;
+  }
+
+  .mobileFilterWrapper {
+    position: relative;
+    z-index: -10;
+    width: 32px;
+    height: 32px;
+    padding-top: 2px;
+    background-color: var(--btn-active-bg);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px var(--box-shadow);
   }
 
   .mobileFilterBtn {

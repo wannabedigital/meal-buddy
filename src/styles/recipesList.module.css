@@ -54,4 +54,9 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
+  .favoriteRecipesList {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }

@@ -55,3 +55,14 @@
   transform: scale(1.02);
   transition: transform 0.2s ease-out;
 }
+
+@media (max-width: 768px) {
+  .recipeCard {
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .recipeTitle {
+    min-height: 40px;
+  }
+}
