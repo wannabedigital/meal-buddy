@@ -48,6 +48,14 @@ export async function GET(request, { params }) {
           '[]'
         ) AS tags,
 
+        COALESCE(
+          json_agg(DISTINCT jsonb_build_object(
+            'id', i.id,
+            'name', i.name
+          )) FILTER (WHERE i.id IS NOT NULL),
+          '[]'
+        ) AS ingredients,
+
         CASE
           WHEN $2::int IS NULL THEN NULL
           ELSE EXISTS (
@@ -72,6 +80,11 @@ export async function GET(request, { params }) {
         ON rt.recipe_id = p.recipe_id
       LEFT JOIN tags t
         ON t.id = rt.tag_id
+
+      LEFT JOIN recipe_ingredients ri
+        ON ri.recipe_id = p.recipe_id
+      LEFT JOIN ingredients i
+        ON i.id = ri.ingredient_id
 
       WHERE p.recipe_id = $1
 

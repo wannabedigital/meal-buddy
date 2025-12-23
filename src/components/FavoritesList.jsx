@@ -23,7 +23,7 @@ const FavoritesList = () => {
   useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset, userId, setRecipes]);
+  }, [offset, userId, setRecipes, setSelectedRecipe]);
 
   async function fetchList() {
     try {
@@ -62,9 +62,7 @@ const FavoritesList = () => {
       )
     );
     setSelectedRecipe((prev) =>
-      prev.map((r) =>
-        r.recipe_id === recipeId ? { ...r, favorited: true } : r
-      )
+      prev && prev.recipe_id === recipeId ? { ...prev, favorited: true } : prev
     );
     try {
       const res = await fetch(`/api/favorites/${recipeId}`, {
@@ -85,16 +83,18 @@ const FavoritesList = () => {
         )
       );
       setSelectedRecipe((prev) =>
-        prev.map((r) =>
-          r.recipe_id === recipeId ? { ...r, favorited: false } : r
-        )
+        prev && prev.recipe_id === recipeId
+          ? { ...prev, favorited: false }
+          : prev
       );
     }
   }
 
   async function deleteFavorite(recipeId) {
     setRecipes((prev) => prev.filter((r) => r.recipe_id !== recipeId));
-    setSelectedRecipe((prev) => prev.filter((r) => r.recipe_id !== recipeId));
+    setSelectedRecipe((prev) =>
+      prev && prev.recipe_id === recipeId ? null : prev
+    );
 
     try {
       const res = await fetch(`/api/favorites/${recipeId}`, {

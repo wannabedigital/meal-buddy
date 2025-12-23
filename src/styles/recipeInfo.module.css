@@ -111,3 +111,29 @@
 .valName {
   font-weight: 700;
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .recipeName {
+    display: contents;
+  }
+
+  .description {
+    width: 100%;
+    text-wrap: pretty;
+  }
+
+  .body {
+    margin-top: 16px;
+  }
+
+  .nutValGrid {
+    grid-template: 1fr 1fr / 1fr 1fr;
+  }
+}
