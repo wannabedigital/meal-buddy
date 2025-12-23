@@ -6,8 +6,8 @@ import { useState } from 'react';
 import styles from '@styles/page.module.css';
 import AuthForm from '@components/AuthForm';
 import Modal from '@ui/Modal';
+import AddRecipePage from '@ui/AddRecipePage';
 import { useAuthStore } from '@store/authStore';
-import AddRecipeForm from '@/components/AddRecipeForm';
 
 export default function AddRecipe() {
   const { isAuth } = useAuthStore();
@@ -22,7 +22,7 @@ export default function AddRecipe() {
     <>
       <main className={styles.page}>
         {isAuth ? (
-          <AddRecipeForm />
+          <AddRecipePage />
         ) : (
           <div className={styles.notLogin}>
             Войдите в аккаунт для добавления рецепта

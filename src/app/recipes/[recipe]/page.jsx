@@ -30,6 +30,7 @@ export default async function Recipe({ params }) {
         cookingTime={recipeInfo.cooking_time}
         difficulty={recipeInfo.difficulty}
         categories={recipeInfo.categories}
+        ingredients={recipeInfo.ingredients}
         tags={recipeInfo.tags}
         weight={recipeInfo.total_weight}
         calories={recipeInfo.total_calories}

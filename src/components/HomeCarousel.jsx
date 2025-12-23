@@ -154,6 +154,7 @@ const HomeCarousel = () => {
             difficulty={selectedRecipe.difficulty}
             categories={selectedRecipe.categories}
             tags={selectedRecipe.tags}
+            ingredients={selectedRecipe.ingredients}
             weight={selectedRecipe.total_weight}
             calories={selectedRecipe.total_calories}
             proteins={selectedRecipe.total_proteins}
