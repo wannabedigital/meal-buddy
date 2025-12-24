@@ -21,7 +21,42 @@
 
 .needToKnowLabel {
   font-size: 2rem;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.needToKnowDetails::details-content {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+}
+
+.needToKnowDetails[open]::details-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s ease-in-out;
+}
+
+.needToKnowDetails .needToKnowSummary::marker,
+:is(::-webkit-details-marker) {
+  content: '+ ';
+  font-size: 3.2rem;
+  font-weight: 800;
+}
+
+.needToKnowDetails[open] .needToKnowSummary::marker {
+  content: '− ';
+  font-size: 3.2rem;
+  font-weight: 800;
+}
+
+.needToKnowSummary {
+  margin-bottom: 20px;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.styles.needToKnowParag {
+  text-wrap: pretty;
 }
 
 .fieldContainer {
