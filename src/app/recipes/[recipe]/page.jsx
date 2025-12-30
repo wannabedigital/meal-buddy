@@ -1,22 +1,19 @@
-import Image from 'next/image';
 import styles from '@styles/recipes.module.css';
 import RecipeInfo from '@ui/RecipeInfo';
+
+const BASE_URL = process.env.BASE_URL;
 
 export default async function Recipe({ params }) {
   const { recipe } = await params;
   const recipeId = Number(recipe);
-  const recipeRes = await fetch(
-    `http://localhost:3000/api/recipes/${recipeId}`
-  );
+  const recipeRes = await fetch(`${BASE_URL}/api/recipes/${recipeId}`);
   if (!recipeRes.ok) {
     return;
   }
   const recipeData = await recipeRes.json();
   const recipeInfo = recipeData.recipe;
 
-  const stepsRes = await fetch(
-    `http://localhost:3000/api/recipes/steps/${recipe}`
-  );
+  const stepsRes = await fetch(`${BASE_URL}/api/recipes/steps/${recipe}`);
   const stepsData = await stepsRes.json();
 
   const resipeSteps = stepsData.steps;
