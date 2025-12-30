@@ -15,7 +15,7 @@ const RecipeCard = ({
     <article className={styles.recipeCard}>
       <div className={styles.recipePhotoWrapper}>
         <Image
-          src={`/img/recipes/${id}.png`}
+          src={`/img/recipes/${id}.png` || null}
           alt='recipe img'
           fill
           loading='eager'
